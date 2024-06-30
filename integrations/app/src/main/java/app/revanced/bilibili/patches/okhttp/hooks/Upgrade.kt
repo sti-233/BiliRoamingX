@@ -33,7 +33,7 @@ class BUpgradeInfo(
 object Upgrade : ApiHook() {
     private const val UPGRADE_CHECK_API = "https://api.github.com/repos/sti-233/BiliRoamingX-PreBuilds/releases"
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
-    var fromSelf = true
+    var fromSelf = fromSelf
 
     fun customUpdate(fromSelf: Boolean = false): Boolean {
         return (fromSelf || Settings.CustomUpdate()) && isOsArchArm64 && isPrebuilt
@@ -103,7 +103,7 @@ object Upgrade : ApiHook() {
                     "message" to "0",
                     "ttl" to 1,
                     "data" to mapOf(
-                        "title" to "新版漫游X集成包",
+                        "title" to "新版 Bilix",
                         "content" to newChangelog.toString(),
                         "version" to info.version,
                         "version_code" to if (sameApp) info.versionCode + 1 else info.versionCode,
@@ -121,7 +121,7 @@ object Upgrade : ApiHook() {
                     Logger.debug { "Upgrade check result: $it" }
                 }
             } else {
-                return mapOf("code" to -1, "message" to "未发现新版漫游X集成包！").toJSONObject()
+                return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
             }
         }
         return null
