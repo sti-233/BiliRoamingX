@@ -33,10 +33,11 @@ class BUpgradeInfo(
 object Upgrade : ApiHook() {
     private const val UPGRADE_CHECK_API = "https://api.github.com/repos/sti-233/BiliRoamingX-PreBuilds/releases"
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
-    var fromSelf = fromSelf
+    var fromSelf = false
 
     fun customUpdate(fromSelf: Boolean = false): Boolean {
-        return (fromSelf || Settings.CustomUpdate()) && isOsArchArm64 && isPrebuilt
+        return (Settings.BlockUpdate() || customUpdate(fromSelf = fromSelf))
+                && url.contains("/x/v2/version/fawkes/upgrade")
     }
 
     override fun shouldHook(url: String, status: Int): Boolean {
