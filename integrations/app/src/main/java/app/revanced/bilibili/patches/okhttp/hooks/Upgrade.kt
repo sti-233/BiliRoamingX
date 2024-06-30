@@ -40,11 +40,6 @@ object Upgrade : ApiHook() {
                 && url.contains("/x/v2/version/fawkes/upgrade")
     }
 
-    override fun shouldHook(url: String, status: Int): Boolean {
-        return (Settings.BlockUpdate() || customUpdate(fromSelf = fromSelf))
-                && url.contains("/x/v2/version/fawkes/upgrade")
-    }
-
     override fun hook(url: String, status: Int, request: String, response: String): String {
         return if (customUpdate(fromSelf = fromSelf))
             (runCatchingOrNull { checkUpgrade().toString() }
