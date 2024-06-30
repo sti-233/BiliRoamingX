@@ -31,9 +31,9 @@ class BUpgradeInfo(
 }
 
 object Upgrade : ApiHook() {
-    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases"
+    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/sti-233/BiliRoamingX-PreBuilds/releases"
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
-    var fromSelf = false
+    var fromSelf = true
 
     fun customUpdate(fromSelf: Boolean = false): Boolean {
         return (fromSelf || Settings.CustomUpdate()) && isOsArchArm64 && isPrebuilt
