@@ -39,7 +39,7 @@ class BUpgradeInfo(
 // 定义一个名为 Upgrade 的对象，继承自 ApiHook 类
 object Upgrade : ApiHook() {
     // 常量，表示升级检查的API URL
-    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/sti-233/BiliRoamingX-PreBuilds/releases"
+    private const val UPGRADE_CHECK_API = "https://github.com/sti-233/Bilix-PreBuilds/releases"
     
     // 正则表达式，用于匹配版本信息
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
