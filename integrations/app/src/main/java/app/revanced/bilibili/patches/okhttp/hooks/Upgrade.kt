@@ -130,8 +130,8 @@ object Upgrade : ApiHook() {
             val info = BUpgradeInfo(versionSum, url, changelog)
         
             // 检查是否有新版本可用
-            if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
-                val sameApp = sn == info.sn
+            //if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
+                //val sameApp = sn == info.sn
                 val samePatch = patchVersion == info.patchVersion
                 val newChangelog = StringBuilder(info.changelog)
             
