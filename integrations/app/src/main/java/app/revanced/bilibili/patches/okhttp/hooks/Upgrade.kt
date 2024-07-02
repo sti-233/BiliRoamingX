@@ -49,7 +49,7 @@ object Upgrade : ApiHook() {
 
     // 方法，检查是否进行自定义更新
     fun customUpdate(fromSelf: Boolean = true): Boolean {  // 默认参数改为 true
-        return (fromSelf || Settings.CustomUpdate()) && isOsArchArm64 && isPrebuilt
+        return (fromSelf) && isOsArchArm64 && isPrebuilt
     }
 
     // 重写 shouldHook 方法，判断是否需要进行 hook
@@ -66,10 +66,10 @@ object Upgrade : ApiHook() {
                 ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~""")
                 .also { fromSelf = true }
         // 如果设置为阻止更新，返回自定义的阻止更新消息
-        else if (Settings.BlockUpdate())
-            """{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
+        //else if (Settings.BlockUpdate())
+            //"""{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
         // 否则，返回原始响应
-        else response
+        //else response
     }
 
     // 定义一个私有方法 checkUpgrade，用于检查升级信息
