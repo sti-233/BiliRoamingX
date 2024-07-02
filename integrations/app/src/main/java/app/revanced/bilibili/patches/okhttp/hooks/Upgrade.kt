@@ -50,10 +50,10 @@ class BUpgradeInfo(
 object Upgrade : ApiHook() {
     // 常量，表示升级检查的API URL
     private const val UPGRADE_CHECK_API = "https://github.com/sti-233/Bilix-PreBuilds/releases"
-    
+
     // 正则表达式，用于匹配版本信息
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
-    
+
     // 变量，表示是否是自定义更新
     var fromSelf = true  // 将 fromSelf 设置为 true，以启用自定义更新
     var isOsArchArm64 = true
@@ -70,20 +70,20 @@ object Upgrade : ApiHook() {
         //如果 (fromSelf || Settings.CustomUpdate()) 为 true，则继续计算 isOsArchArm64 && isPrebuilt，并返回其结果
         //仅当 (fromSelf || Settings.CustomUpdate()) 为 true，且 isOsArchArm64 和 isPrebuilt 都为 true 时，返回 true
         //否则，返回 false。
-        return (fromSelf) && isOsArchArm64 && isPrebuilt
+        return true && isOsArchArm64 && isPrebuilt
     }
 
     // 重写 shouldHook 方法，判断是否需要进行 hook
     override fun shouldHook(url: String, status: Int): Boolean {
-        return (customUpdate(fromSelf = fromSelf))
+        return true
                 && url.contains("/x/v2/version/fawkes/upgrade")
     }
 
     // 重写 hook 方法，处理 API 请求和响应
     override fun hook(url: String, status: Int, request: String, response: String): String {
-        return if (customUpdate(fromSelf = fromSelf))
+        return if (customUpdate(fromSelf = true))
             // 尝试进行升级检查，如果失败，返回错误消息
-            (runCatchingOrNull { checkUpgrade().toString() }
+            (runCatching { checkUpgrade().toString() }
                 ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~""")
                 .also { fromSelf = true }
         // 如果设置为阻止更新，返回自定义的阻止更新消息
@@ -93,6 +93,7 @@ object Upgrade : ApiHook() {
         else response
     }
 
+    //以下为更新检查，与开启自定义更新无关
     // 定义一个私有方法 checkUpgrade，用于检查升级信息
     private fun checkUpgrade(): JSONObject {
         var page = 1  // 初始化页码为1
