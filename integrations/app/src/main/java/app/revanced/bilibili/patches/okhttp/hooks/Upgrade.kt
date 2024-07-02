@@ -18,7 +18,7 @@ import java.net.URL  // 导入 URL 类，用于处理网络地址
  *[0]bilibili版本 eg. "8.3.0"
  *[1]bilibili版本代号 eg. "8030200"
  *[2]BiliromingX大版本 eg. "1.22.4"
- *[3]BiliromingX大服本号 eg. "10224"
+ *[3]BiliromingX大服本号 eg. "1022004"
  *[4]Patch后Bilibili包内AndroidManifest.xml第5546行下的BUILD_SN eg. "15279103"
  *[5]Patch后Bilibili包的字节大小 eg. "143162913"
  *[6]Patch后Bilibili包的md5 eg. "afaf4efb4582deb65f61f993ff55fd38"
