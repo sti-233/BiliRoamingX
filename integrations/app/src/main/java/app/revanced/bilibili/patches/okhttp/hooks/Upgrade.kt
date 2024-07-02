@@ -46,9 +46,20 @@ object Upgrade : ApiHook() {
     
     // 变量，表示是否是自定义更新
     var fromSelf = true  // 将 fromSelf 设置为 true，以启用自定义更新
+    var isOsArchArm64 = true
+    var isPrebuilt = true
 
     // 方法，检查是否进行自定义更新
     fun customUpdate(fromSelf: Boolean = true): Boolean {  // 默认参数改为 true
+        //返回 true，如果 fromSelf 为 true。否则，返回 Settings.CustomUpdate() 的结果
+        //首先，计算 (fromSelf || Settings.CustomUpdate())：
+        //如果 fromSelf 为 true，则 (fromSelf || Settings.CustomUpdate()) 为 true，且不会调用 Settings.CustomUpdate()
+        //如果 fromSelf 为 false，则 (fromSelf || Settings.CustomUpdate()) 的值取决于 Settings.CustomUpdate() 的结果
+        //然后，计算 (fromSelf || Settings.CustomUpdate()) 的结果与 isOsArchArm64 和 isPrebuilt 的逻辑与操作
+        //如果 (fromSelf || Settings.CustomUpdate()) 为 false，则整个表达式为 false，不再计算 isOsArchArm64 和 isPrebuilt
+        //如果 (fromSelf || Settings.CustomUpdate()) 为 true，则继续计算 isOsArchArm64 && isPrebuilt，并返回其结果
+        //仅当 (fromSelf || Settings.CustomUpdate()) 为 true，且 isOsArchArm64 和 isPrebuilt 都为 true 时，返回 true
+        //否则，返回 false。
         return (fromSelf) && isOsArchArm64 && isPrebuilt
     }
 
@@ -69,7 +80,7 @@ object Upgrade : ApiHook() {
         //else if (Settings.BlockUpdate())
             //"""{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
         // 否则，返回原始响应
-        //else response
+        else response
     }
 
     // 定义一个私有方法 checkUpgrade，用于检查升级信息
