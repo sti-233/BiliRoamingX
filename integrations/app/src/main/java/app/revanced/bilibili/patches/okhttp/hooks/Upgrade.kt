@@ -12,9 +12,9 @@ import org.json.JSONObject  // 导入 JSON 对象类
 import java.net.URL  // 导入 URL 类，用于处理网络地址
 
 /**
- * versionSum format: "$version $versionCode $patchVersion $patchVersionCode $size $md5 publishTime"
+ * versionSum format: "$version $versionCode $patchVersion $patchVersionCode $sn $size $md5 publishTime"
  *
- * eg. "7.66.0 7660300 1.17 10170 135819602 2c2e2008ecb46c927981078811402151 1709975253"
+ * eg. "7.66.0 7660300 1.17 10170 14056308 135819602 2c2e2008ecb46c927981078811402151 1709975253"
  */
 // 定义 BUpgradeInfo 类，表示升级信息
 class BUpgradeInfo(
@@ -30,10 +30,10 @@ class BUpgradeInfo(
     val versionCode get() = versionInfo[1].toLong()  // 版本代码
     val patchVersion get() = versionInfo[2]  // 补丁版本
     val patchVersionCode get() = versionInfo[3].toInt()  // 补丁版本代码
-    //val sn get() = versionInfo[4].toLong()  // 序列号
-    val size get() = versionInfo[4].toLong()  // 升级包大小
-    val md5 get() = versionInfo[5]  // 升级包的 MD5 校验值
-    val publishTime get() = versionInfo[6].toLong()  // 发布时间
+    val sn get() = versionInfo[4].toLong()  // 序列号
+    val size get() = versionInfo[5].toLong()  // 升级包大小
+    val md5 get() = versionInfo[6]  // 升级包的 MD5 校验值
+    val publishTime get() = versionInfo[7].toLong()  // 发布时间
 }
 
 // 定义一个名为 Upgrade 的对象，继承自 ApiHook 类
@@ -49,12 +49,12 @@ object Upgrade : ApiHook() {
 
     // 方法，检查是否进行自定义更新
     fun customUpdate(fromSelf: Boolean = true): Boolean {  // 默认参数改为 true
-        return (fromSelf || Settings.CustomUpdate(fromSelf = fromSelf)) && isOsArchArm64 && isPrebuilt
+        return (fromSelf || Settings.CustomUpdate()) && isOsArchArm64 && isPrebuilt
     }
 
     // 重写 shouldHook 方法，判断是否需要进行 hook
     override fun shouldHook(url: String, status: Int): Boolean {
-        return (Settings.BlockUpdate() || customUpdate(fromSelf = fromSelf))
+        return (customUpdate(fromSelf = fromSelf))
                 && url.contains("/x/v2/version/fawkes/upgrade")
     }
 
@@ -88,9 +88,9 @@ object Upgrade : ApiHook() {
         val context = Utils.getContext()
     
         // 获取应用的构建序列号（BUILD_SN）
-        //val sn = context.packageManager.getApplicationInfo(
-            //context.packageName, PackageManager.GET_META_DATA
-        //).metaData.getInt("BUILD_SN").toLong()
+        val sn = context.packageManager.getApplicationInfo(
+            context.packageName, PackageManager.GET_META_DATA
+        ).metaData.getInt("BUILD_SN").toLong()
     
         // 获取当前补丁版本和补丁版本代码
         val patchVersion = BuildConfig.VERSION_NAME
@@ -130,8 +130,8 @@ object Upgrade : ApiHook() {
             val info = BUpgradeInfo(versionSum, url, changelog)
         
             // 检查是否有新版本可用
-            //if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
-                //val sameApp = sn == info.sn
+            if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
+                val sameApp = sn == info.sn
                 val samePatch = patchVersion == info.patchVersion
                 val newChangelog = StringBuilder(info.changelog)
             
