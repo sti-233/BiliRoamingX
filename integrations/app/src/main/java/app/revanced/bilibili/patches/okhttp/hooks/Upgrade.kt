@@ -81,7 +81,7 @@ object Upgrade : ApiHook() {
 
     // 重写 hook 方法，处理 API 请求和响应
     override fun hook(url: String, status: Int, request: String, response: String): String {
-        return if (customUpdate(fromSelf = true))
+        return if (customUpdate(fromSelf = fromSelf))
             // 尝试进行升级检查，如果失败，返回错误消息
             (runCatching { checkUpgrade().toString() }
                 ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~""")
