@@ -70,12 +70,12 @@ object Upgrade : ApiHook() {
         //如果 (fromSelf || Settings.CustomUpdate()) 为 true，则继续计算 isOsArchArm64 && isPrebuilt，并返回其结果
         //仅当 (fromSelf || Settings.CustomUpdate()) 为 true，且 isOsArchArm64 和 isPrebuilt 都为 true 时，返回 true
         //否则，返回 false。
-        return true && isOsArchArm64 && isPrebuilt
+        return (fromSelf) && isOsArchArm64 && isPrebuilt
     }
 
     // 重写 shouldHook 方法，判断是否需要进行 hook
     override fun shouldHook(url: String, status: Int): Boolean {
-        return true
+        return (customUpdate(fromSelf = fromSelf))
                 && url.contains("/x/v2/version/fawkes/upgrade")
     }
 
