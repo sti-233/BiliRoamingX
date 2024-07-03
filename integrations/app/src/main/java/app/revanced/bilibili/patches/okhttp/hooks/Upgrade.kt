@@ -11,6 +11,13 @@ import org.json.JSONArray  // 导入 JSON 数组类
 import org.json.JSONObject  // 导入 JSON 对象类
 import java.net.URL  // 导入 URL 类，用于处理网络地址
 
+
+
+
+
+
+
+// 关于版本更新的做法注释，与更新机制无关
 /**
  * versionSum format: "$version $versionCode $patchVersion $patchVersionCode $sn $size $md5 publishTime"
  *
@@ -46,6 +53,15 @@ class BUpgradeInfo(
     val publishTime get() = versionInfo[7].toLong()  // 发布时间
 }
 
+
+
+
+
+
+
+
+
+// 更新机制
 // 定义一个名为 Upgrade 的对象，继承自 ApiHook 类
 object Upgrade : ApiHook() {
     // 常量，表示升级检查的API URL
@@ -83,7 +99,7 @@ object Upgrade : ApiHook() {
     override fun hook(url: String, status: Int, request: String, response: String): String {
         return if (customUpdate(fromSelf = fromSelf))
             // 尝试进行升级检查，如果失败，返回错误消息
-            (runCatching { checkUpgrade().toString() }
+            (runCatchingOrNull { checkUpgrade().toString() }
                 ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~""")
                 .also { fromSelf = true }
         // 如果设置为阻止更新，返回自定义的阻止更新消息
@@ -93,7 +109,17 @@ object Upgrade : ApiHook() {
         else response
     }
 
-    //以下为更新检查，与开启自定义更新无关
+
+
+
+
+
+
+
+
+
+
+    // 以下为更新检查，与更新机制无关
     // 定义一个私有方法 checkUpgrade，用于检查升级信息
     private fun checkUpgrade(): JSONObject {
         var page = 1  // 初始化页码为1
