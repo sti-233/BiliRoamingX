@@ -12,7 +12,7 @@
 基于 ReVanced 实现的B站 Android 客户端增强模块。模块设置完美融入 APP 设置，功能丰富，自定义程度高。
 得益于实现方式，对 APP 性能几乎没有影响，流畅、迅速、启动快。支持粉版、Play 版及 HD 版。
 
-## 源码构建
+## · 源码构建
 
 ```shell
 git clone https://github.com/BiliRoamingX/BiliRoamingX.git
@@ -22,7 +22,7 @@ cd BiliRoamingX
 - Windows 系统上使用 `gradlew.bat` 命令而不是 `./gradlew`
 - 构建产物在 `build` 目录下
 
-## 下载使用
+## · 下载使用
 
 - 前往 [Bilix-PreBuilds Release](https://github.com/sti-233/Bilix-PreBuilds/releases/latest) 下载
 - 参照 [revanced-cli](https://github.com/ReVanced/revanced-cli/tree/main/docs) 文档打包
