@@ -1,4 +1,4 @@
-name: Biliroming X Build
+name: CI
 
 on:
   workflow_dispatch:
@@ -9,6 +9,7 @@ on:
       - '**.md'
       - '.github/**'
       - '!.github/workflows/*'
+      _ '.github/workflows/ci.yml'
 
 jobs:
   build:
