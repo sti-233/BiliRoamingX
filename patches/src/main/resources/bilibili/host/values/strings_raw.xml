@@ -21,7 +21,7 @@
     <string name="biliroaming_cosov_host">upos-sz-mirrorcosov.bilivideo.com</string>
     <string name="biliroaming_hwov_host">upos-sz-mirrorhwov.bilivideo.com</string>
     <string name="biliroaming_hk_bcache_host">cn-hk-eq-bcache-01.bilivideo.com</string>
-    <string name="biliroaming_project_url">https://github.com/sti_233/BiliRoamingX</string>
-    <string name="biliroaming_tg_url">https://t.me/Aniruf-x</string>
+    <string name="biliroaming_project_url">https://github.com/sti-233/BiliRoamingX</string>
+    <string name="biliroaming_tg_url">https://t.me/Aniruf_x</string>
     <string name="biliroaming_feedback_url">https://github.com/sti-233/BiliRoamingX/issues/new/choose</string>
 </resources>
