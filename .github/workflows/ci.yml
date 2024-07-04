@@ -1,4 +1,4 @@
-name: CI
+name: Biliroming X Build
 
 on:
   workflow_dispatch:
