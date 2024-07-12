@@ -214,7 +214,7 @@
     <string name="biliroaming_update_title">更新</string>
     <string name="biliroaming_block_update_title">禁止APP检查官方更新</string>
     <string name="biliroaming_custom_update_title">允许检查预构建包更新</string>
-    <string name="biliroaming_custom_update_summary">允许APP检查作者官方项目提供的预构建漫游X集成包更新</string>
+    <string name="biliroaming_custom_update_summary">APP检查本Fork项目(sti-233)提供的预构建 Bilix 更新</string>
     <string name="biliroaming_custom_update_only_64">仅支持Arm 64位系统</string>
     <string name="biliroaming_custom_update_invalid_sig">当前APP非漫游X作者预构建</string>
     <string name="biliroaming_video_detail_other_category_title">其它</string>
@@ -270,7 +270,7 @@
     <string name="biliroaming_toast_backup_success">备份成功</string>
     <string name="biliroaming_dialog_msg_restore_success">恢复成功，需要重启才能生效</string>
     <string name="biliroaming_usage_hint_title">使用说明</string>
-    <string name="biliroaming_usage_hint_message">欢迎使用基于ReVanced方案的修改版哔哩哔哩。以下几点说明请仔细阅读：\n\n1. 本修改方案完全开源免费，谨防被骗。\n2. 本修改版不使用Xposed框架，追求极致性能。\n3. 请勿在B站任何地方暗示/提及/宣传本修改版。\n4. 设置入口：我的 -> 设置 -> 哔哩漫游X。</string>
+    <string name="biliroaming_usage_hint_message">欢迎使用基于ReVanced方案的修改版哔哩哔哩。以下几点说明请仔细阅读：\n\n1. 本修改方案完全开源免费，谨防被骗。\n2. 本修改版不使用Xposed框架，追求极致性能。\n3. 请勿在B站任何地方暗示/提及/宣传本修改版，否则将会被拉入黑名单，模块所有功能将被停用。\n4. 设置入口：我的 -> 设置 -> 哔哩漫游X。</string>
     <string name="biliroaming_get_it">我知道了</string>
     <string name="biliroaming_jump_settings">前往设置</string>
     <string name="biliroaming_hint_open_from_mine">请最好在登录状态下通过我的页面设置入口进入本页面以获取所有项目</string>
