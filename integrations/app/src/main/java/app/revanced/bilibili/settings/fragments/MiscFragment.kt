@@ -47,7 +47,7 @@ class MiscFragment : BiliRoamingBaseSettingFragment() {
             //{ Utils.getString("biliroaming_custom_update_only_64") } to { !isOsArchArm64 },
             //{ Utils.getString("biliroaming_custom_update_invalid_sig") } to { !isPrebuilt }
         //)
-        disablePreference(Settings.Skin.key, PrefsDisableReason.AppVersion) {
+        //disablePreference(Settings.Skin.key, PrefsDisableReason.AppVersion) {
             //Utils.isHd()
         //}
     }
