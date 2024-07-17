@@ -1,6 +1,6 @@
 <div align="center">
 
-# BiliromingX
+# BiliroamingX
 
 [![CI](https://github.com/sti-233/BiliRoamingX/workflows/CI/badge.svg)](https://github.com/sti-233/BiliRoamingX/actions)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue?logo=telegram)](https://t.me/Aniruf_x)
@@ -14,7 +14,7 @@
 
 ## · 源码构建
 
-- 更推荐使用[官方仓库](https://github.com/BiliromingX/BiliRoamingX)进行构建
+- 更推荐使用[官方仓库](https://github.com/BiliroamingX/BiliRoamingX)进行构建
 
 ```shell
 git clone --recurse-submodules https://github.com/sti-233/BiliRoamingX.git
