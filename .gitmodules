@@ -1,0 +1,3 @@
+[submodule "integrations/libs/Dobby"]
+	path = integrations/libs/Dobby
+	url = https://github.com/LSPosed/Dobby.git
