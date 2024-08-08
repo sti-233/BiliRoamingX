@@ -1,0 +1,104 @@
+name: Merge Fork resource
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Merge:
+    name: Merge BiliRoamingX
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Get original resource
+        run: |
+          git clone --recurse-submodules https://github.com/BiliRoamingX/BiliRoamingX.git
+          git clone https://github.com/sti-233/Bilix-PreBuilds.git
+          cp ./Bilix-PreBuilds/Merge-Resource/* ./
+          cp ./BiliRoamingX/patches/src/main/resources/bilibili/host/values/strings.xml ./patches/src/main/resources/bilibili/host/values/strings.xml
+          cp ./BiliRoamingX/patches/src/main/resources/bilibili/host/values/strings_raw.xml ./patches/src/main/resources/bilibili/host/values/strings_raw.xml
+          cp ./BiliRoamingX/integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          cp ./BiliRoamingX/integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+
+      - name: Recompose resource
+        run: |
+          sed -i '/    <string name="biliroaming_settings_title">哔哩漫游X<\/string>/c\    <string name="biliroaming_settings_title">BiliRoamingX<\/string>' ./patches/src/main/resources/bilibili/host/values/strings.xml
+          echo "Line:36 Succeed"
+          sed -i '/    <string name="biliroaming_toast_prefix">哔哩漫游X：<\/string>/c\    <string name="biliroaming_toast_prefix">BiliRoamingX：<\/string>' ./patches/src/main/resources/bilibili/host/values/strings.xml
+          echo "Line:38 Succeed"
+          sed -i '/    <string name="biliroaming_custom_update_summary">允许APP检查作者官方项目提供的预构建漫游X集成包更新<\/string>/c\    <string name="biliroaming_custom_update_summary">允许APP检查本Fork项目(sti-233)提供的预构建 Bilix 更新<\/string>' ./patches/src/main/resources/bilibili/host/values/strings.xml
+          echo "Line:40 Succeed"
+          sed -i '/    <string name="biliroaming_usage_hint_message">欢迎使用基于ReVanced方案的修改版哔哩哔哩。以下几点说明请仔细阅读：\\n\\n1. 本修改方案完全开源免费，谨防被骗。\\n2. 本修改版不使用Xposed框架，追求极致性能。\\n3. 请勿在B站任何地方暗示\/提及\/宣传本修改版。\\n4. 设置入口：我的 -> 设置 -> 哔哩漫游X。<\/string>/c\    <string name="biliroaming_usage_hint_message">欢迎使用基于ReVanced方案的修改版哔哩哔哩。以下几点说明请仔细阅读：\\n\\n1. 本修改方案完全开源免费，谨防被骗。\\n2. 本修改版不使用Xposed框架，追求极致性能。\\n3. 请勿在B站任何地方暗示\/提及\/宣传本修改版，否则将会被拉入黑名单，模块所有功能将被停用。\\n4. 设置入口：我的 -> 设置 -> BiliRoamingX。<\/string>' ./patches/src/main/resources/bilibili/host/values/strings.xml
+          echo "Line:42 Succeed"
+          sed -i 's#    <string name="biliroaming_project_url">https://github.com/BiliRoamingX/BiliRoamingX</string>#    <string name="biliroaming_project_url">https://github.com/sti-233/BiliRoamingX</string>#' ./patches/src/main/resources/bilibili/host/values/strings_raw.xml
+          echo "Line:44 Succeed"
+          sed -i 's#    <string name="biliroaming_tg_url">https://t.me/bb_show</string>#    <string name="biliroaming_tg_url">https://t.me/Aniruf_x</string>#' ./patches/src/main/resources/bilibili/host/values/strings_raw.xml
+          echo "Line:46 Succeed"
+          sed -i 's#    <string name="biliroaming_feedback_url">https://github.com/BiliRoamingX/BiliRoamingX/issues/new/choose</string>#    <string name="biliroaming_feedback_url">https://github.com/sti-233/BiliRoamingX/issues/new/choose</string>#' ./patches/src/main/resources/bilibili/host/values/strings_raw.xml
+          echo "Line:48 Succeed"
+          sed -i 's#    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases"#    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases"#' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:50 Succeed"
+          sed -i '/    var fromSelf = false/c\    var fromSelf = true' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:52 Succeed"
+          sed -i '/    var fromSelf = true/a\    var isOsArchArm64 = true' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:54 Succeed"
+          sed -i '/    var fromSelf = true/a\    var isPrebuilt = true' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:56 Succeed"
+          sed -i '/    fun customUpdate(fromSelf: Boolean = false): Boolean {/c\    fun customUpdate(fromSelf: Boolean = true): Boolean {' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:58 Succeed"
+          sed -i '/        return (fromSelf || Settings.CustomUpdate()) && isOsArchArm64 && isPrebuilt/c\        return (fromSelf) && isOsArchArm64 && isPrebuilt' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:60 Succeed"
+          sed -i '/        else if (Settings.BlockUpdate())/c\        //else if (Settings.BlockUpdate())' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:62 Succeed"
+          sed -i '/            """{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""/c\            //"""{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:64 Succeed"
+          sed -i '/^[[:space:]]*Utils\.isHd()/!b;n;c\        //}' ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          echo "Line:66 Succeed"
+          sed -i '0,/        disablePreference(/s//        \/\/disablePreference(/' ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          echo "Line:68 Succeed"
+          sed -i '/            key = Settings.CustomUpdate.key,/c\            //key = Settings.CustomUpdate.key,' ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          echo "Line:70 Succeed"
+          sed -i '/            { Utils.getString("biliroaming_custom_update_only_64") } to { !isOsArchArm64 },/c\            //{ Utils.getString("biliroaming_custom_update_only_64") } to { !isOsArchArm64 },' ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          echo "Line:72 Succeed"
+          sed -i '/            { Utils.getString("biliroaming_custom_update_invalid_sig") } to { !isPrebuilt }/c\            //{ Utils.getString("biliroaming_custom_update_invalid_sig") } to { !isPrebuilt }' ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          echo "Line:74 Succeed"
+          sed -i '0,/        )/s//        \/\/)/' ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          echo "Line:76 Succeed"
+          sed -i '/\ \ \ \ \ \ \ \ disablePreference(Settings.Skin.key, PrefsDisableReason.AppVersion) {/c\        //disablePreference(Settings.Skin.key, PrefsDisableReason.AppVersion) {' ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          echo "Line:78 Succeed"
+          sed -i '/            Utils.isHd()/c\            //Utils.isHd()' ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          echo "Line:80 Succeed"
+          sed -i '/                        "title" to "新版漫游X集成包",/c\                        "title" to "新版 Bilix",' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:82 Succeed"
+          sed -i '/                return mapOf("code" to -1, "message" to "未发现新版漫游X集成包！").toJSONObject()/c\                return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:84 Succeed"
+          sed -i '/                .also { fromSelf = false }/c\                .also { fromSelf = true }' ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          echo "Line:86 Succeed"
+
+      - name: Push resource
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add ./patches/src/main/resources/bilibili/host/values/strings.xml
+          git add ./integrations/app/src/main/java/app/revanced/bilibili/patches/okhttp/hooks/Upgrade.kt
+          git add ./integrations/app/src/main/java/app/revanced/bilibili/settings/fragments/MiscFragment.kt
+          git add ./patches/src/main/resources/bilibili/host/values/strings_raw.xml
+          git add README.md
+          git add version.txt
+          git add Build.prop
+          git add old-commit-id.txt
+          git add head-commit-id.txt
+          git add BiliRoamingX-CI-Build.zip
+          git commit -m "Restore Repo"
+          git push
