@@ -31,12 +31,14 @@ class BUpgradeInfo(
 }
 
 object Upgrade : ApiHook() {
-    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases"
+    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases"
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
-    var fromSelf = false
+    var fromSelf = true
+    var isPrebuilt = true
+    var isOsArchArm64 = true
 
-    fun customUpdate(fromSelf: Boolean = false): Boolean {
-        return (fromSelf || Settings.CustomUpdate()) && isOsArchArm64 && isPrebuilt
+    fun customUpdate(fromSelf: Boolean = true): Boolean {
+        return (fromSelf) && isOsArchArm64 && isPrebuilt
     }
 
     override fun shouldHook(url: String, status: Int): Boolean {
@@ -48,9 +50,9 @@ object Upgrade : ApiHook() {
         return if (customUpdate(fromSelf = fromSelf))
             (runCatchingOrNull { checkUpgrade().toString() }
                 ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~""")
-                .also { fromSelf = false }
-        else if (Settings.BlockUpdate())
-            """{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
+                .also { fromSelf = true }
+        //else if (Settings.BlockUpdate())
+            //"""{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
         else response
     }
 
@@ -103,7 +105,7 @@ object Upgrade : ApiHook() {
                     "message" to "0",
                     "ttl" to 1,
                     "data" to mapOf(
-                        "title" to "新版漫游X集成包",
+                        "title" to "新版 Bilix",
                         "content" to newChangelog.toString(),
                         "version" to info.version,
                         "version_code" to if (sameApp) info.versionCode + 1 else info.versionCode,
@@ -121,7 +123,7 @@ object Upgrade : ApiHook() {
                     Logger.debug { "Upgrade check result: $it" }
                 }
             } else {
-                return mapOf("code" to -1, "message" to "未发现新版漫游X集成包！").toJSONObject()
+                return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
             }
         }
         return null
