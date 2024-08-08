@@ -1,17 +1,26 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
     paths-ignore:
       - '**.md'
+      - '**.txt'
       - '.github/**'
       - '!.github/workflows/*'
+      - '.github/workflows/Merge.yml'
+      - 'gradle/*'
+      - 'idea/*'
 
 jobs:
   build:
-    name: Build
+    env:
+      onlybigver: false
+      torelease: false
+      Bilix-need-release: false
+    name: Build BiliroamingX CI
     runs-on: ubuntu-latest
 
     steps:
@@ -36,22 +45,80 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'gradle/*.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+            
+      - name: Retrieve version (Only big ver)
+        if: ${{ env.onlybigver == 'true' }}
+        run: |
+          version=`awk -F "=" '$1 == "version" {print $2}' gradle.properties`
+          version="${version}"
+          echo "ver=$version" >> $GITHUB_ENV
 
       - name: Retrieve version
+        if: ${{ env.onlybigver == 'false' }}
         run: |
           version=`awk -F "=" '$1 == "version" {print $2}' gradle.properties`
           commit_count=`git rev-list HEAD --count`
           version="${version}.r${commit_count}"
-          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "version=$version" >> $GITHUB_ENV
+          
+      - name: Get ahead commits number
+        if: ${{ env.onlybigver == 'false' }}
+        run: |
+          echo "ahead-commits-number=`awk -F "=" '$1 == "ahead.commits.number" {print $2}' Build.prop`" >> $GITHUB_ENV
+
+      - name: Reset version
+        if: ${{ env.onlybigver == 'false' }}
+        run: |
+          base_version=$(echo ${{ env.version }} | cut -d '.' -f 1-3)
+          base_number=$(echo ${{ env.version }} | cut -d '.' -f 4 | cut -d 'r' -f 2)
+          new_number=$(( base_number - ${{ env.ahead-commits-number }} ))
+          new_version="$base_version.r$new_number"
+          echo "ver=$new_version" >> $GITHUB_ENV
 
       - name: Build with gradle
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g -Pversion=$VERSION dist
+        run: ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g -Pversion=$ver dist
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: BiliRoamingX-${{ env.VERSION }}
+          name: BiliRoamingX-${{ env.ver }}.zip
           path: 'build'
+          
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Get commit resource
+        run: |
+          git clone --recurse-submodules https://github.com/sti-233/BiliRoamingX.git
+          cp ./BiliRoamingX/head-commit-id.txt ./old-commit-id.txt
+          cp ./BiliRoamingX/Build.prop ./Build.prop
+        continue-on-error: true
+
+      - name: Prepare commit number
+        run: |
+          echo "new-ahead-commits-number=$(( ${{ env.ahead-commits-number }} + 2 ))" >> $GITHUB_ENV
+
+      - name: Write infomations
+        run: |
+          echo "${{ env.ver }}" > version.txt
+          echo "${{ github.event.head_commit.id }}" > head-commit-id.txt
+          sed -i 's/^.*ahead\.commits\.number.*$/ahead.commits.number=${{ env.new-ahead-commits-number }}/' ./Build.prop
+
+      - name: Push resource
+        run: |
+          cp -r /home/runner/work/BiliRoamingX/BiliRoamingX/artifacts/BiliRoamingX-${{ env.ver }}.zip/* ./
+          zip BiliRoamingX-CI-Build.zip BiliRoamingX-integrations-${{ env.ver }}.apk BiliRoamingX-patches-${{ env.ver }}.jar
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add version.txt
+          git add Build.prop
+          git add old-commit-id.txt
+          git add head-commit-id.txt
+          git add BiliRoamingX-CI-Build.zip
+          git commit -m "Push resource"
+          git push
