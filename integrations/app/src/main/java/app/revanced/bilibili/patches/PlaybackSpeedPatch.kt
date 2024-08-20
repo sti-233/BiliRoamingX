@@ -13,6 +13,7 @@ import app.revanced.bilibili.settings.Settings
 import app.revanced.bilibili.utils.*
 import com.bilibili.music.podcast.view.PodcastSpeedSeekBar
 import tv.danmaku.ijk.media.player.IMediaPlayer
+import java.lang.ref.WeakReference
 
 object PlaybackSpeedPatch {
 
@@ -59,18 +60,43 @@ object PlaybackSpeedPatch {
             cacheReverseSpeedArray
         }
 
+    @JvmStatic
+    private var playerCache = WeakReference<IMediaPlayer>(null)
+
     @Keep
     @JvmStatic
     fun defaultSpeed(player: IMediaPlayer?, speed: Float): Float {
         // only apply to video, not apply to podcast
         if (player != null && player.videoSarNum <= 0) return speed
-        val customSpeed = Settings.DefaultPlaybackSpeed()
-        return if (customSpeed != 0f) customSpeed else speed
+        val newSpeed = if (playerCache.get() !== player) {
+            defaultSpeed(speed)
+        } else speed
+        playerCache = WeakReference(player)
+        return newSpeed
     }
 
     @Keep
     @JvmStatic
-    fun defaultSpeed(speed: Float) = defaultSpeed(null, speed)
+    fun defaultSpeed(speed: Float): Float {
+        val defaultSpeed = Settings.DefaultPlaybackSpeed()
+        return if (Settings.RememberPlaybackSpeed()) {
+            val selectedSpeed = Settings.SelectedPlaybackSpeed()
+            if (selectedSpeed == 0f && defaultSpeed != 0f) {
+                defaultSpeed
+            } else if (selectedSpeed != 0f) {
+                selectedSpeed
+            } else speed
+        } else if (defaultSpeed != 0f) {
+            defaultSpeed
+        } else speed
+    }
+
+    @Keep
+    @JvmStatic
+    fun onPlaybackSpeedSelected(speed: Float) {
+        if (Settings.RememberPlaybackSpeed())
+            Settings.SelectedPlaybackSpeed.save(speed)
+    }
 
     @Keep
     @JvmStatic
