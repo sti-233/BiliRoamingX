@@ -134,12 +134,22 @@
         <androidx.preference.SwitchPreferenceCompat
             android:key="block_update"
             android:title="@string/biliroaming_block_update_title" />
-        <androidx.preference.SwitchPreferenceCompat
+                <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="custom_update"
             android:summary="@string/biliroaming_custom_update_summary"
             android:title="@string/biliroaming_custom_update_title" />
-    </androidx.preference.PreferenceCategory>
+        <tv.danmaku.bili.widget.preference.BLRadioGroupEntrancePreference
+            android:dependency="custom_update"
+            android:fragment="app.revanced.bilibili.settings.fragments.UposSettingFragment"
+            android:key="custom_update_source"
+            android:persistent="true"
+            android:title="@string/biliroaming_custom_update_source_title"
+            android:summary="@string/biliroaming_custom_update_source_summary"
+            app:migration_settings_type="none"
+            app:radioDefaultValue="@string/biliroaming_release_host"
+            app:radioEntries="@array/biliroaming_update_source_entries"
+            app:radioEntryValues="@array/biliroaming_update_source_values" />
 
     <androidx.preference.PreferenceCategory>
         <androidx.preference.SwitchPreferenceCompat
