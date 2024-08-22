@@ -141,7 +141,6 @@
             android:title="@string/biliroaming_custom_update_title" />
         <tv.danmaku.bili.widget.preference.BLRadioGroupEntrancePreference
             android:dependency="custom_update"
-            android:fragment="app.revanced.bilibili.settings.fragments.UposSettingFragment"
             android:key="custom_update_source"
             android:persistent="true"
             android:title="@string/biliroaming_custom_update_source_title"
@@ -150,6 +149,7 @@
             app:radioDefaultValue="@string/biliroaming_release_host"
             app:radioEntries="@array/biliroaming_update_source_entries"
             app:radioEntryValues="@array/biliroaming_update_source_values" />
+    </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory>
         <androidx.preference.SwitchPreferenceCompat
