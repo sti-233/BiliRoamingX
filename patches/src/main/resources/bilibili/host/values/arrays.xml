@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="biliroaming_update_source_entries">
+        <item>Bilix-Release</item>
+        <item>Bilix-Nightly</item>
+        <item>BiliRoamingX/BiliRoamingX-Prebuilds</item>
+        <item>BnqDzj/BiliRoamingX-Prebuilds</item>
+    </string-array>
+    <string-array name="biliroaming_update_source_values">
+        <item>@string/biliroaming_release_host</item>
+        <item>@string/biliroaming_nightly_host</item>
+        <item>@string/biliroaming_original_host</item>
+    </string-array>
     <string-array name="biliroaming_full_screen_quality_entries">
         <item>默认</item>
         <item>8K 超高清</item>
