@@ -4,7 +4,6 @@
         <item>Bilix-Release</item>
         <item>Bilix-Nightly</item>
         <item>BiliRoamingX/BiliRoamingX-Prebuilds</item>
-        <item>BnqDzj/BiliRoamingX-Prebuilds</item>
     </string-array>
     <string-array name="biliroaming_update_source_values">
         <item>@string/biliroaming_release_host</item>
