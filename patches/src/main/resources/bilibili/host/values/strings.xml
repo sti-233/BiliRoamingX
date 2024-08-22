@@ -217,6 +217,8 @@
     <string name="biliroaming_custom_update_summary">允许APP检查本Fork项目(sti-233)提供的预构建 Bilix 更新</string>
     <string name="biliroaming_custom_update_only_64">仅支持Arm 64位系统</string>
     <string name="biliroaming_custom_update_invalid_sig">当前APP非漫游X作者预构建</string>
+    <string name="biliroaming_custom_update_source_title">自定义更新源</string>
+    <string name="biliroaming_custom_update_source_summary">不同源间可能签名不同,请谨慎选择 !</string>
     <string name="biliroaming_video_detail_other_category_title">其它</string>
     <string name="biliroaming_disable_auto_select_title">禁止自动转到动态</string>
     <string name="biliroaming_disable_auto_select_summary">禁止评论带图时自动勾选转到动态</string>
