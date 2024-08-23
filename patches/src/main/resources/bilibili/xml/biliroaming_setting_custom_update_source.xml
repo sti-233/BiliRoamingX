@@ -9,5 +9,6 @@
         app:migration_settings_type="none"
         app:radioDefaultValue="@string/biliroaming_release_host"
         app:radioEntries="@array/biliroaming_update_source_entries"
+        app:radioEntrySummaries="@array/biliroaming_update_source_summaries"
         app:radioEntryValues="@array/biliroaming_update_source_values" />
 </androidx.preference.PreferenceScreen>
