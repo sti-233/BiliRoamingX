@@ -10,6 +10,11 @@
         <item>@string/biliroaming_nightly_host</item>
         <item>@string/biliroaming_original_host</item>
     </string-array>
+    <string-array name="biliroaming_update_source_summaries">
+        <item>由 sti-233 (本fork) 提供的更新源 较慢</item>
+        <item>由 sti-233 (本fork) 提供的更新源 快</item>
+        <item>由  zjns (bb_show) 提供的更新源 很慢 (签名不同 !)</item>
+    </string-array>
     <string-array name="biliroaming_full_screen_quality_entries">
         <item>默认</item>
         <item>8K 超高清</item>
