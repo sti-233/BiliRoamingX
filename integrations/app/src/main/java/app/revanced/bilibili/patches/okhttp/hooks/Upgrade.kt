@@ -8,6 +8,8 @@ import app.revanced.bilibili.utils.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
+import android.content.Context
+import app.revanced.bilibili.utils.UpdateUrlReplacer
 
 /**
  * versionSum format: "$version $versionCode $patchVersion $patchVersionCode $sn $size $md5 publishTime"
@@ -31,7 +33,10 @@ class BUpgradeInfo(
 }
 
 object Upgrade : ApiHook() {
-    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases"
+    // 使用 UpdateUrlReplacer 获取更新检查 API
+    private val upgradeCheckApi: String by lazy {
+        UpdateUrlReplacer(Utils.getContext()).getUpdateUrl()
+    }
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
@@ -49,10 +54,7 @@ object Upgrade : ApiHook() {
     override fun hook(url: String, status: Int, request: String, response: String): String {
         return if (customUpdate(fromSelf = fromSelf))
             (runCatchingOrNull { checkUpgrade().toString() }
-                ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~""")
-                .also { fromSelf = true }
-        //else if (Settings.BlockUpdate())
-            //"""{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
+                ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~"}""").also { fromSelf = true }
         else response
     }
 
