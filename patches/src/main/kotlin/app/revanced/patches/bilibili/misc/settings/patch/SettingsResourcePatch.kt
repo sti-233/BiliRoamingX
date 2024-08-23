@@ -27,6 +27,7 @@ object SettingsResourcePatch : ResourcePatch() {
     val isHd get() = packageName == "tv.danmaku.bilibilihd"
 
     private val xmls = arrayOf(
+        "biliroaming_setting_custom_update_source.xml",
         "biliroaming_locales_config.xml",
         "biliroaming_search_result.xml",
         "biliroaming_settings.xml",
