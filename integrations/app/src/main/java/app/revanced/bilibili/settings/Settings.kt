@@ -230,7 +230,7 @@ object Settings {
     @JvmField val EnhanceCommentCopy = BooleanSetting(key = "comment_copy_enhance", dependency = CommentCopy)
     @JvmField val BlockUpdate = BooleanSetting(key = "block_update")
     @JvmField val CustomUpdate = BooleanSetting(key = "custom_update", defValue = true)
-    @JvmField val CustomUpdateSource = BooleanSetting(key = "custom_update_source")
+    @JvmField val UpdateApi = StringSetting(key = "custom_update_source")
     @JvmField val BlockFollowButton = StringSetSetting(key = "block_follow_button")
     @JvmField val CustomTheme = BooleanSetting(key = "custom_theme")
     @JvmField val Skin = BooleanSetting(key = "skin")
