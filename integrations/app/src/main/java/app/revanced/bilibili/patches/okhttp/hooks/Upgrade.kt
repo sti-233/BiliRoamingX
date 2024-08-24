@@ -5,11 +5,11 @@ import app.revanced.bilibili.integrations.BuildConfig
 import app.revanced.bilibili.patches.okhttp.ApiHook
 import app.revanced.bilibili.settings.Settings
 import app.revanced.bilibili.utils.*
-import android.content.Context
-import app.revanced.bilibili.utils.UpdateUrlReplacer
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
+import android.net.Uri
+
 
 /**
  * versionSum format: "$version $versionCode $patchVersion $patchVersionCode $sn $size $md5 publishTime"
@@ -33,12 +33,8 @@ class BUpgradeInfo(
 }
 
 object Upgrade : ApiHook() {
-    // 使用 UpdateUrlReplacer 获取更新检查 API
-    private val upgradeCheckApi: String by lazy {
-        UpdateUrlReplacer(Utils.getContext()).getUpdateUrl()
-    }
-
-    private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
+    private const val UPGRADE_CHECK_API = Settings.UpdateApi()
+    private val changelogRegex = Regex("""(.*)\n版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
     var isOsArchArm64 = true
@@ -55,80 +51,153 @@ object Upgrade : ApiHook() {
     override fun hook(url: String, status: Int, request: String, response: String): String {
         return if (customUpdate(fromSelf = fromSelf))
             (runCatchingOrNull { checkUpgrade().toString() }
-                ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~"}""").also { fromSelf = true }
+                ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~""")
+                .also { fromSelf = true }
+        //else if (Settings.BlockUpdate())
+            //"""{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
         else response
     }
 
     private fun checkUpgrade(): JSONObject {
-        var page = 1
-        var result: JSONObject?
-        do {
-            result = pagingCheck(page++)
-        } while (result == null)
-        return result
+        // 只在 UpdateApi 等于特定 URL 时执行
+        if (UpdateApi in listOf("https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases", "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases")) {
+
+            var page = 1
+            var result: JSONObject?
+            do {
+                result = pagingCheck(page++)
+            } while (result == null)
+            return result
+            
+        } else {
+        var page = 0
+        }
     }
 
     private fun pagingCheck(page: Int): JSONObject? {
-        val context = Utils.getContext()
-        val sn = context.packageManager.getApplicationInfo(
-            context.packageName, PackageManager.GET_META_DATA
-        ).metaData.getInt("BUILD_SN").toLong()
-        val patchVersion = BuildConfig.VERSION_NAME
-        val patchVersionCode = BuildConfig.VERSION_CODE
-        val pageUrl = "$upgradeCheckApi?page=$page&per_page=100"
-        val response = JSONArray(URL(pageUrl).readText())
-        val mobiApp = Utils.getMobiApp()
-        for (data in response) {
-            if (!data.optString("tag_name").startsWith("$mobiApp-"))
-                continue
-            val body = data.optString("body").replace("\r\n", "\n")
-            val values = changelogRegex.matchEntire(body)?.groupValues ?: break
-            val versionSum = values[1]
-            val changelog = values[2].trim()
-            val url = data.optJSONArray("assets")
-                ?.optJSONObject(0)?.optString("browser_download_url") ?: break
-            Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
-            val info = BUpgradeInfo(versionSum, url, changelog)
-            if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
-                val sameApp = sn == info.sn
-                val samePatch = patchVersion == info.patchVersion
-                val newChangelog = StringBuilder(info.changelog)
-                val appVersionChange =
-                    if (sameApp) "" else "APP版本：$versionName($versionCode) --> ${info.version}(${info.versionCode})"
-                val patchVersionChange =
-                    if (samePatch) "" else "漫游X版本：$patchVersion --> ${info.patchVersion}"
-                val changeSum = arrayOf(appVersionChange, patchVersionChange)
-                    .filterNot { it.isEmpty() }.joinToString(separator = "\n")
-                if (changeSum.isNotEmpty()) {
-                    newChangelog.append("\n\n")
-                    newChangelog.append(changeSum)
+        if (UpdateApi in listOf("https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases", "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases")) {
+
+            val context = Utils.getContext()
+            val sn = context.packageManager.getApplicationInfo(
+                context.packageName, PackageManager.GET_META_DATA
+            ).metaData.getInt("BUILD_SN").toLong()
+            val patchVersion = BuildConfig.VERSION_NAME
+            val patchVersionCode = BuildConfig.VERSION_CODE
+            val pageUrl = "$UPGRADE_CHECK_API?page=$page&per_page=100"
+            val response = JSONArray(URL(pageUrl).readText())
+            val mobiApp = Utils.getMobiApp()
+            for (data in response) {
+                if (!data.optString("tag_name").startsWith("$mobiApp-"))
+                    continue
+                val body = data.optString("body").replace("\r\n", "\n")
+                val values = changelogRegex.matchEntire(body)?.groupValues ?: break
+                val versionSum = values[2]
+                val changelog = values[3].trim()
+                val url = data.optJSONArray("assets")
+                    ?.optJSONObject(0)?.optString("browser_download_url") ?: break
+                Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
+                val info = BUpgradeInfo(versionSum, url, changelog)
+                if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
+                    val sameApp = sn == info.sn
+                    val samePatch = patchVersion == info.patchVersion
+                    val newChangelog = StringBuilder(info.changelog)
+                    val appVersionChange =
+                        if (sameApp) "" else "APP版本：$versionName($versionCode) --> ${info.version}(${info.versionCode})"
+                    val patchVersionChange =
+                        if (samePatch) "" else "漫游X版本：$patchVersion --> ${info.patchVersion}"
+                    val changeSum = arrayOf(appVersionChange, patchVersionChange)
+                        .filterNot { it.isEmpty() }.joinToString(separator = "\n")
+                    if (changeSum.isNotEmpty()) {
+                        newChangelog.append("\n\n")
+                        newChangelog.append(changeSum)
+                    }
+                    return mapOf(
+                        "code" to 0,
+                        "message" to "0",
+                        "ttl" to 1,
+                        "data" to mapOf(
+                            "title" to "新版 Bilix",
+                            "content" to newChangelog.toString(),
+                            "version" to info.version,
+                            "version_code" to if (sameApp) info.versionCode + 1 else info.versionCode,
+                            "url" to speedupGhUrl(info.url),
+                            "size" to info.size,
+                            "md5" to info.md5,
+                            "silent" to 0,
+                            "upgrade_type" to 1,
+                            "cycle" to 1,
+                            "policy" to 0,
+                            "policy_url" to "",
+                            "ptime" to info.publishTime,
+                        )
+                    ).toJSONObject().also {
+                        Logger.debug { "Upgrade check result: $it" }
+                    }
+                } else {
+                    return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
-                return mapOf(
-                    "code" to 0,
-                    "message" to "0",
-                    "ttl" to 1,
-                    "data" to mapOf(
-                        "title" to "新版 Bilix",
-                        "content" to newChangelog.toString(),
-                        "version" to info.version,
-                        "version_code" to if (sameApp) info.versionCode + 1 else info.versionCode,
-                        "url" to speedupGhUrl(info.url),
-                        "size" to info.size,
-                        "md5" to info.md5,
-                        "silent" to 0,
-                        "upgrade_type" to 1,
-                        "cycle" to 1,
-                        "policy" to 0,
-                        "policy_url" to "",
-                        "ptime" to info.publishTime,
-                    )
-                ).toJSONObject().also {
-                    Logger.debug { "Upgrade check result: $it" }
-                }
-            } else {
-                return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
             }
+            return null
+        } else {
+            val context = Utils.getContext()
+            val sn = context.packageManager.getApplicationInfo(
+                context.packageName, PackageManager.GET_META_DATA
+            ).metaData.getInt("BUILD_SN").toLong()
+            val patchVersion = BuildConfig.VERSION_NAME
+            val patchVersionCode = BuildConfig.VERSION_CODE
+            val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=1&per_page=100"
+            val response = JSONArray(URL(pageUrl).readText())
+            for (data in response) {
+                if (!data.optString("Nightly")
+                    continue
+                val body = data.optString("body").replace("\r\n", "\n")
+                val values = changelogRegex.matchEntire(body)?.groupValues ?: break
+                val versionSum = values[2]
+                val changelog = values[3].trim()
+                val url = data.optJSONArray("assets")
+                    ?.optJSONObject(0)?.optString("browser_download_url") ?: break
+                Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
+                val info = BUpgradeInfo(versionSum, url, changelog)
+                if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
+                    val sameApp = sn == info.sn
+                    val samePatch = patchVersion == info.patchVersion
+                    val newChangelog = StringBuilder(info.changelog)
+                    val appVersionChange =
+                        if (sameApp) "" else "APP版本：$versionName($versionCode) --> ${info.version}(${info.versionCode})"
+                    val patchVersionChange =
+                        if (samePatch) "" else "漫游X版本：$patchVersion --> ${info.patchVersion}"
+                    val changeSum = arrayOf(appVersionChange, patchVersionChange)
+                        .filterNot { it.isEmpty() }.joinToString(separator = "\n")
+                    if (changeSum.isNotEmpty()) {
+                        newChangelog.append("\n\n")
+                        newChangelog.append(changeSum)
+                    }
+                    return mapOf(
+                        "code" to 0,
+                        "message" to "0",
+                        "ttl" to 1,
+                        "data" to mapOf(
+                            "title" to "新版 Bilix-Nightly",
+                            "content" to newChangelog.toString(),
+                            "version" to info.version,
+                            "version_code" to if (sameApp) info.versionCode + 1 else info.versionCode,
+                            "url" to speedupGhUrl(info.url),
+                            "size" to info.size,
+                            "md5" to info.md5,
+                            "silent" to 0,
+                            "upgrade_type" to 1,
+                            "cycle" to 1,
+                            "policy" to 0,
+                            "policy_url" to "",
+                            "ptime" to info.publishTime,
+                        )
+                    ).toJSONObject().also {
+                        Logger.debug { "Upgrade check result: $it" }
+                    }
+                } else {
+                    return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
+                }
+            }
+            return 1
         }
-        return null
-    }
 }
