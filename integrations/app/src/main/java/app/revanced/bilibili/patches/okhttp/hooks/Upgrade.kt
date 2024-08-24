@@ -33,7 +33,8 @@ class BUpgradeInfo(
 }
 
 object Upgrade : ApiHook() {
-    private const val UPGRADE_CHECK_API = Settings.UpdateApi()
+    private val UPGRADE_CHECK_API = Settings.UpdateApi()
+    val UpdateApi = Settings.UpdateApi()
     private val changelogRegex = Regex("""(.*)\n版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
@@ -70,7 +71,7 @@ object Upgrade : ApiHook() {
             return result
             
         } else {
-        var page = 0
+        return JSONObject()
         }
     }
 
@@ -148,7 +149,7 @@ object Upgrade : ApiHook() {
             val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=1&per_page=100"
             val response = JSONArray(URL(pageUrl).readText())
             for (data in response) {
-                if (!data.optString("Nightly")
+                if (!data.optString("tag_name").startsWith("Nightly-$mobiApp"))
                     continue
                 val body = data.optString("body").replace("\r\n", "\n")
                 val values = changelogRegex.matchEntire(body)?.groupValues ?: break
@@ -198,6 +199,7 @@ object Upgrade : ApiHook() {
                     return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
             }
-            return 1
+            return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject()
         }
+    }
 }
