@@ -148,6 +148,7 @@ object Upgrade : ApiHook() {
             val patchVersionCode = BuildConfig.VERSION_CODE
             val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=1&per_page=100"
             val response = JSONArray(URL(pageUrl).readText())
+            val mobiApp = Utils.getMobiApp()
             for (data in response) {
                 if (!data.optString("tag_name").startsWith("Nightly-$mobiApp"))
                     continue
