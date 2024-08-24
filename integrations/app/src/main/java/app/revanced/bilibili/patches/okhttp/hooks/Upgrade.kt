@@ -10,7 +10,6 @@ import org.json.JSONObject
 import java.net.URL
 import android.net.Uri
 
-
 /**
  * versionSum format: "$version $versionCode $patchVersion $patchVersionCode $sn $size $md5 publishTime"
  *
@@ -60,24 +59,16 @@ object Upgrade : ApiHook() {
     }
 
     private fun checkUpgrade(): JSONObject {
-        // 只在 UpdateApi 等于特定 URL 时执行
-        if (UpdateApi in listOf("https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases", "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases")) {
-
-            var page = 1
-            var result: JSONObject?
-            do {
-                result = pagingCheck(page++)
-            } while (result == null)
-            return result
-            
-        } else {
-        return JSONObject()
-        }
+        var page = 1
+        var result: JSONObject?
+        do {
+            result = pagingCheck(page++)
+        } while (result == null)
+        return result
     }
 
     private fun pagingCheck(page: Int): JSONObject? {
         if (UpdateApi in listOf("https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases", "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases")) {
-
             val context = Utils.getContext()
             val sn = context.packageManager.getApplicationInfo(
                 context.packageName, PackageManager.GET_META_DATA
@@ -146,7 +137,7 @@ object Upgrade : ApiHook() {
             ).metaData.getInt("BUILD_SN").toLong()
             val patchVersion = BuildConfig.VERSION_NAME
             val patchVersionCode = BuildConfig.VERSION_CODE
-            val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=1&per_page=100"
+            val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=$page&per_page=100"
             val response = JSONArray(URL(pageUrl).readText())
             val mobiApp = Utils.getMobiApp()
             for (data in response) {
@@ -200,7 +191,7 @@ object Upgrade : ApiHook() {
                     return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
             }
-            return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject()
+            return null
         }
     }
 }
