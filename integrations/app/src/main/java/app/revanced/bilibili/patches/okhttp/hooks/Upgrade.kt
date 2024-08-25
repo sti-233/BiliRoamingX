@@ -131,6 +131,8 @@ object Upgrade : ApiHook() {
             }
             return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject().also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
+                Logger.debug { "Checking if upgrade is needed: sn < info.sn = ${sn < info.sn}, patchVersionCode < info.patchVersionCode = ${patchVersionCode < info.patchVersionCode}" }
+                Logger.debug { "Checking version info, sn: $sn, info.sn: ${info.sn}, patchVersionCode: $patchVersionCode, info.patchVersionCode: ${info.patchVersionCode}" }
             }
         } else {
             val context = Utils.getContext()
@@ -195,6 +197,8 @@ object Upgrade : ApiHook() {
             }
             return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject().also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
+                Logger.debug { "Checking if upgrade is needed: sn < info.sn = ${sn < info.sn}, patchVersionCode < info.patchVersionCode = ${patchVersionCode < info.patchVersionCode}" }
+                Logger.debug { "Checking version info, sn: $sn, info.sn: ${info.sn}, patchVersionCode: $patchVersionCode, info.patchVersionCode: ${info.patchVersionCode}" }
             }
         }
     }
