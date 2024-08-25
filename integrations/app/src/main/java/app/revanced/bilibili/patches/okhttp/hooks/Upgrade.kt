@@ -101,7 +101,7 @@ object Upgrade : ApiHook() {
                 }
                 Logger.debug { "Upgrade info: versionSum: $versionSum, changelog: $changelog, url: $url" }
                 val info = BUpgradeInfo(versionSum, url, changelog)
-    Logger.debug { "Parsed BUpgradeInfo: $info" }
+                Logger.debug { "Parsed BUpgradeInfo: $info" }
                 if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
                     Logger.debug { "New version available: $info" }
                     val sameApp = sn == info.sn
@@ -161,17 +161,30 @@ object Upgrade : ApiHook() {
             val mobiApp = Utils.getMobiApp()
             val type = "Nightly"
             for (data in response) {
+                Logger.debug { "Processing data: $data" }
                 if (!data.optString("tag_name").startsWith("$type-$mobiApp-$type"))
+                    Logger.debug { "Skipping data due to tag_name not starting with $mobiApp- : ${data.optString("tag_name")}" }
                     continue
                 val body = data.optString("body").replace("\r\n", "\n")
-                val values = changelogRegex.matchEntire(body)?.groupValues ?: break
+                Logger.debug { "Parsed body: $body" }
+                val values = changelogRegex.matchEntire(body)?.groupValues
+                if (values == null) {
+                    Logger.debug { "Regex match failed for body: $body" }
+                    break
+                }
                 val versionSum = values[1]
                 val changelog = values[2].trim()
                 val url = data.optJSONArray("assets")
-                    ?.optJSONObject(0)?.optString("browser_download_url") ?: break
+                    ?.optJSONObject(0)?.optString("browser_download_url")
+                if (url == null) {
+                    Logger.debug { "URL not found in assets for data: $data" }
+                    break
+                }
                 Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
                 val info = BUpgradeInfo(versionSum, url, changelog)
+                Logger.debug { "Parsed BUpgradeInfo: $info" }
                 if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
+                    Logger.debug { "New version available: $info" }
                     val sameApp = sn == info.sn
                     val samePatch = patchVersion == info.patchVersion
                     val newChangelog = StringBuilder(info.changelog)
@@ -208,11 +221,15 @@ object Upgrade : ApiHook() {
                         Logger.debug { "Upgrade check result: $it" }
                     }
                 } else {
+                    Logger.debug { "No new version found for Bilix." }
                     return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
             }
+            Logger.debug { "Exiting loop, returning '更新源出错！'" }
             return null.also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
+                Logger.debug { "Upgrade Api val : $updateApi" }
+                Logger.debug { "Upgrade Api page : $page" }
             }
         }
     }
