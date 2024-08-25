@@ -172,8 +172,8 @@ object Upgrade : ApiHook() {
                     Logger.debug { "Regex match failed for body: $body" }
                     break
                 }
-                val versionSum = values[1]
-                val changelog = values[2].trim()
+                val versionSum = values!![1]
+                val changelog = values!![2].trim()
                 val url = data.optJSONArray("assets")
                     ?.optJSONObject(0)?.optString("browser_download_url")
                 if (url == null) {
