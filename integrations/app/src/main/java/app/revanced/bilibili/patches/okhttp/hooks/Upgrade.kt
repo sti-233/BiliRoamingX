@@ -34,7 +34,7 @@ object Upgrade : ApiHook() {
     private val UPGRADE_CHECK_API: String
         get() = Settings.UpdateApi()
     val updateApi = Settings.UpdateApi()
-    private val changelogRegex = Regex("""(.*?)(?:\n版本信息：)(.*?)\n?(.*)""", RegexOption.DOT_MATCHES_ALL)
+    private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
     var isOsArchArm64 = true
@@ -91,8 +91,8 @@ object Upgrade : ApiHook() {
                     Logger.debug { "Regex match failed for body: $body" }
                     break
                 }
-                val versionSum = values[2]
-                val changelog = values[3].trim()
+                val versionSum = values[1]
+                val changelog = values[2].trim()
                 val url = data.optJSONArray("assets")
                     ?.optJSONObject(0)?.optString("browser_download_url")
                 if (url == null) {
@@ -164,8 +164,8 @@ object Upgrade : ApiHook() {
                     continue
                 val body = data.optString("body").replace("\r\n", "\n")
                 val values = changelogRegex.matchEntire(body)?.groupValues ?: break
-                val versionSum = values[2]
-                val changelog = values[3].trim()
+                val versionSum = values[1]
+                val changelog = values[2].trim()
                 val url = data.optJSONArray("assets")
                     ?.optJSONObject(0)?.optString("browser_download_url") ?: break
                 Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
