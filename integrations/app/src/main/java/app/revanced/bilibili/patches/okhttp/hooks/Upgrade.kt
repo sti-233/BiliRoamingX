@@ -129,14 +129,12 @@ object Upgrade : ApiHook() {
                     return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
             }
-            val pageUrl = "$UPGRADE_CHECK_API?page=$page&per_page=100"
-            val response = JSONArray(URL(pageUrl).readText())
             val body = response.optString("body").replace("\r\n", "\n")
-            val values = changelogRegex.matchEntire(body)?.groupValues ?: break
+            val values = changelogRegex.matchEntire(body)?.groupValues
             val versionSum = values[2]
             val changelog = values[3].trim()
-            val url = data.optJSONArray("assets")
-                ?.optJSONObject(0)?.optString("browser_download_url") ?: break
+            val url = response.optJSONArray("assets")
+                ?.optJSONObject(0)?.optString("browser_download_url")
             val info = BUpgradeInfo(versionSum, url, changelog)
             return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject().also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
