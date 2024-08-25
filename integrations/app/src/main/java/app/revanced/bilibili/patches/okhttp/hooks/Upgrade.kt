@@ -181,7 +181,7 @@ object Upgrade : ApiHook() {
                     break
                 }
                 Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
-                val info = BUpgradeInfo(versionSum, url, changelog)
+                val info = BUpgradeInfo(versionSum!!, url, changelog!!)
                 Logger.debug { "Parsed BUpgradeInfo: $info" }
                 if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
                     Logger.debug { "New version available: $info" }
