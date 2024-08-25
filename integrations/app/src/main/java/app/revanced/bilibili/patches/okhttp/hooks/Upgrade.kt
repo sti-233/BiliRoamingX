@@ -33,7 +33,7 @@ class BUpgradeInfo(
 object Upgrade : ApiHook() {
     private val UPGRADE_CHECK_API: String
         get() = Settings.UpdateApi()
-    val UpdateApi = UPGRADE_CHECK_API
+    val updateApi = Settings.UpdateApi()
     private val changelogRegex = Regex("""(.*)\n版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
@@ -68,7 +68,7 @@ object Upgrade : ApiHook() {
     }
 
     private fun pagingCheck(page: Int): JSONObject? {
-        if (UpdateApi in listOf("https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases", "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases")) {
+        if (updateApi in listOf("https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases", "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases")) {
             val context = Utils.getContext()
             val sn = context.packageManager.getApplicationInfo(
                 context.packageName, PackageManager.GET_META_DATA
@@ -79,17 +79,31 @@ object Upgrade : ApiHook() {
             val response = JSONArray(URL(pageUrl).readText())
             val mobiApp = Utils.getMobiApp()
             for (data in response) {
-                if (!data.optString("tag_name").startsWith("$mobiApp-"))
+                Logger.debug { "Processing data: $data" }
+                if (!data.optString("tag_name").startsWith("$mobiApp-")) {
+                    Logger.debug { "Skipping data due to tag_name not starting with $mobiApp- : ${data.optString("tag_name")}" }
                     continue
+                }
                 val body = data.optString("body").replace("\r\n", "\n")
-                val values = changelogRegex.matchEntire(body)?.groupValues ?: break
+                Logger.debug { "Parsed body: $body" }
+                val values = changelogRegex.matchEntire(body)?.groupValues
+                if (values == null) {
+                    Logger.debug { "Regex match failed for body: $body" }
+                    break
+                }
                 val versionSum = values[2]
                 val changelog = values[3].trim()
                 val url = data.optJSONArray("assets")
-                    ?.optJSONObject(0)?.optString("browser_download_url") ?: break
-                Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
+                    ?.optJSONObject(0)?.optString("browser_download_url")
+                if (url == null) {
+                    Logger.debug { "URL not found in assets for data: $data" }
+                    break
+                }
+                Logger.debug { "Upgrade info: versionSum: $versionSum, changelog: $changelog, url: $url" }
                 val info = BUpgradeInfo(versionSum, url, changelog)
+    Logger.debug { "Parsed BUpgradeInfo: $info" }
                 if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
+                    Logger.debug { "New version available: $info" }
                     val sameApp = sn == info.sn
                     val samePatch = patchVersion == info.patchVersion
                     val newChangelog = StringBuilder(info.changelog)
@@ -100,8 +114,7 @@ object Upgrade : ApiHook() {
                     val changeSum = arrayOf(appVersionChange, patchVersionChange)
                         .filterNot { it.isEmpty() }.joinToString(separator = "\n")
                     if (changeSum.isNotEmpty()) {
-                        newChangelog.append("\n\n")
-                        newChangelog.append(changeSum)
+                        newChangelog.append("\n\n").append(changeSum)
                     }
                     return mapOf(
                         "code" to 0,
@@ -126,9 +139,11 @@ object Upgrade : ApiHook() {
                         Logger.debug { "Upgrade check result: $it" }
                     }
                 } else {
+                    Logger.debug { "No new version found for Bilix." }
                     return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
             }
+            Logger.debug { "Exiting loop, returning '更新源出错！'" }
             return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject().also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
                 Logger.debug { "Upgrade Api val : $updateApi" }
