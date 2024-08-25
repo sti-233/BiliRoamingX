@@ -160,7 +160,7 @@ object Upgrade : ApiHook() {
             val response = JSONArray(URL(pageUrl).readText())
             val mobiApp = Utils.getMobiApp()
             for (data in response) {
-                if (!data.optString("tag_name").startsWith("Nightly-$mobiApp"))
+                if (!data.optString("tag_name").startsWith("$mobiApp-Nightly"))
                     continue
                 val body = data.optString("body").replace("\r\n", "\n")
                 val values = changelogRegex.matchEntire(body)?.groupValues ?: break
