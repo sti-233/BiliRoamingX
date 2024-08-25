@@ -129,17 +129,10 @@ object Upgrade : ApiHook() {
                     return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
             }
-            val body = response.optString("body").replace("\r\n", "\n")?.toInt() ?: 0
-            val values = changelogRegex.matchEntire(body)?.groupValues
-            val versionSum = values[2]?.get(0)
-            val changelog = values[3].trim()?.get(0)
-            val url = response.optJSONArray("assets")?.toInt() ?: 0
-                ?.optJSONObject(0)?.optString("browser_download_url")
-            val info = BUpgradeInfo(versionSum, url, changelog) !!
             return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject().also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
-                Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
-                Logger.debug { "Checking version info, sn: $sn, info.sn: ${info.sn}, patchVersionCode: $patchVersionCode, info.patchVersionCode: ${info.patchVersionCode}" }
+                Logger.debug { "Upgrade Api val : $updateApi" }
+                Logger.debug { "Upgrade Api page : $page" }
             }
         } else {
             val context = Utils.getContext()
