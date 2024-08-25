@@ -8,7 +8,6 @@ import app.revanced.bilibili.utils.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
-import android.net.Uri
 
 /**
  * versionSum format: "$version $versionCode $patchVersion $patchVersionCode $sn $size $md5 publishTime"
@@ -82,8 +81,8 @@ object Upgrade : ApiHook() {
                 continue
             val body = data.optString("body").replace("\r\n", "\n")
             val values = changelogRegex.matchEntire(body)?.groupValues ?: break
-            val versionSum = values[1]
-            val changelog = values[2].trim()
+            val versionSum = values[2]
+            val changelog = values[3].trim()
             val url = data.optJSONArray("assets")
                 ?.optJSONObject(0)?.optString("browser_download_url") ?: break
             Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
