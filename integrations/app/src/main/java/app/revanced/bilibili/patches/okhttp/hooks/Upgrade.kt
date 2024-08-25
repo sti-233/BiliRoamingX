@@ -159,8 +159,9 @@ object Upgrade : ApiHook() {
             val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=$page&per_page=100"
             val response = JSONArray(URL(pageUrl).readText())
             val mobiApp = Utils.getMobiApp()
+            val type = "Nightly"
             for (data in response) {
-                if (!data.optString("tag_name").startsWith("Nightly-$mobiApp-"))
+                if (!data.optString("tag_name").startsWith("$type-$mobiApp-$type"))
                     continue
                 val body = data.optString("body").replace("\r\n", "\n")
                 val values = changelogRegex.matchEntire(body)?.groupValues ?: break
