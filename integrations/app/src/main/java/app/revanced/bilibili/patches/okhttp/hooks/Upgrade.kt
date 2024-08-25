@@ -34,7 +34,7 @@ object Upgrade : ApiHook() {
     private val UPGRADE_CHECK_API: String
         get() = Settings.UpdateApi()
     val updateApi = Settings.UpdateApi()
-    private val changelogRegex = Regex("""(.*)\n版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
+    private val changelogRegex = Regex("""(.*?)(?:\n版本信息：)(.*?)\n?(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
     var isOsArchArm64 = true
@@ -144,7 +144,7 @@ object Upgrade : ApiHook() {
                 }
             }
             Logger.debug { "Exiting loop, returning '更新源出错！'" }
-            return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject().also {
+            return null.also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
                 Logger.debug { "Upgrade Api val : $updateApi" }
                 Logger.debug { "Upgrade Api page : $page" }
@@ -210,7 +210,7 @@ object Upgrade : ApiHook() {
                     return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
             }
-            return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject().also {
+            return null.also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
             }
         }
