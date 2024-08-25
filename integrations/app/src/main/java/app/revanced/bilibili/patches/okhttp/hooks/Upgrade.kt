@@ -31,9 +31,7 @@ class BUpgradeInfo(
 }
 
 object Upgrade : ApiHook() {
-    private val UPGRADE_CHECK_API: String
-        get() = Settings.UpdateApi()
-    val UpdateApi = UPGRADE_CHECK_API
+    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases"
     private val changelogRegex = Regex("""(.*)\n版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
