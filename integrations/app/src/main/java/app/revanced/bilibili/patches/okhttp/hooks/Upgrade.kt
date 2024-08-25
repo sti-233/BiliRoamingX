@@ -129,8 +129,28 @@ object Upgrade : ApiHook() {
                     return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
                 }
             }
+            val context = Utils.getContext()
+            val sn = context.packageManager.getApplicationInfo(
+                context.packageName, PackageManager.GET_META_DATA
+            ).metaData.getInt("BUILD_SN").toLong()
+            val patchVersion = BuildConfig.VERSION_NAME
+            val patchVersionCode = BuildConfig.VERSION_CODE
+            val pageUrl = "$UPGRADE_CHECK_API?page=$page&per_page=100"
+            val response = JSONArray(URL(pageUrl).readText())
+            val mobiApp = Utils.getMobiApp()
+            for (data in response) {
+                if (!data.optString("tag_name").startsWith("$mobiApp-"))
+                    continue
+                val body = data.optString("body").replace("\r\n", "\n")
+                val values = changelogRegex.matchEntire(body)?.groupValues ?: break
+                val versionSum = values[2]
+                val changelog = values[3].trim()
+                val url = data.optJSONArray("assets")
+                    ?.optJSONObject(0)?.optString("browser_download_url") ?: break
+                val info = BUpgradeInfo(versionSum, url, changelog)
             return mapOf("code" to -1, "message" to "更新源出错 ！").toJSONObject().also {
                 Logger.debug { "Upgrade Api : $UPGRADE_CHECK_API" }
+                Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
                 Logger.debug { "Checking if upgrade is needed: sn < info.sn = ${sn < info.sn}, patchVersionCode < info.patchVersionCode = ${patchVersionCode < info.patchVersionCode}" }
                 Logger.debug { "Checking version info, sn: $sn, info.sn: ${info.sn}, patchVersionCode: $patchVersionCode, info.patchVersionCode: ${info.patchVersionCode}" }
             }
