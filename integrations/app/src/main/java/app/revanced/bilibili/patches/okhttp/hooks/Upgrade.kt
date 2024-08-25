@@ -88,6 +88,8 @@ object Upgrade : ApiHook() {
                 val url = data.optJSONArray("assets")
                     ?.optJSONObject(0)?.optString("browser_download_url") ?: break
                 Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
+                Logger.debug { "Checking if upgrade is needed: sn < info.sn = ${sn < info.sn}, patchVersionCode < info.patchVersionCode = ${patchVersionCode < info.patchVersionCode}" }
+                Logger.debug { "Checking version info, sn: $sn, info.sn: ${info.sn}, patchVersionCode: $patchVersionCode, info.patchVersionCode: ${info.patchVersionCode}" }
                 val info = BUpgradeInfo(versionSum, url, changelog)
                 if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
                     val sameApp = sn == info.sn
@@ -150,6 +152,8 @@ object Upgrade : ApiHook() {
                 val url = data.optJSONArray("assets")
                     ?.optJSONObject(0)?.optString("browser_download_url") ?: break
                 Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
+                Logger.debug { "Checking if upgrade is needed (Nightly) : sn < info.sn = ${sn < info.sn}, patchVersionCode < info.patchVersionCode = ${patchVersionCode < info.patchVersionCode}" }
+                Logger.debug { "Checking version infov(Nightly) , sn : $sn, info.sn: ${info.sn}, patchVersionCode: $patchVersionCode, info.patchVersionCode: ${info.patchVersionCode}" }
                 val info = BUpgradeInfo(versionSum, url, changelog)
                 if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
                     val sameApp = sn == info.sn
