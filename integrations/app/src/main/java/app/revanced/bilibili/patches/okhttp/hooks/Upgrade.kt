@@ -73,7 +73,7 @@ object Upgrade : ApiHook() {
         ).metaData.getInt("BUILD_SN").toLong()
         val patchVersion = BuildConfig.VERSION_NAME
         val patchVersionCode = BuildConfig.VERSION_CODE
-        val pageUrl = "$UPGRADE_CHECK_API?page=$page&per_page=100"
+        val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=$page&per_page=100"
         val response = JSONArray(URL(pageUrl).readText())
         val mobiApp = Utils.getMobiApp()
         for (data in response) {
