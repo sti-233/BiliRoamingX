@@ -31,8 +31,9 @@ class BUpgradeInfo(
 }
 
 object Upgrade : ApiHook() {
-    private val UPGRADE_CHECK_API = Settings.UpdateApi()
-    val UpdateApi = Settings.UpdateApi()
+    private val UPGRADE_CHECK_API: String
+        get() = Settings.UpdateApi()
+    val UpdateApi = UPGRADE_CHECK_API
     private val changelogRegex = Regex("""(.*)\n版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
@@ -73,7 +74,7 @@ object Upgrade : ApiHook() {
         ).metaData.getInt("BUILD_SN").toLong()
         val patchVersion = BuildConfig.VERSION_NAME
         val patchVersionCode = BuildConfig.VERSION_CODE
-        val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=$page&per_page=100"
+        val pageUrl = "$UPGRADE_CHECK_API?page=$page&per_page=100"
         val response = JSONArray(URL(pageUrl).readText())
         val mobiApp = Utils.getMobiApp()
         for (data in response) {
@@ -130,4 +131,3 @@ object Upgrade : ApiHook() {
         return null
     }
 }
-
