@@ -17,7 +17,7 @@ on:
 jobs:
   build:
     env:
-      onlybigver: false
+      onlybigver: true
       torelease: false
       Bilix-need-release: false
     name: Build BiliroamingX CI
