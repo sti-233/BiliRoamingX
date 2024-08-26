@@ -35,6 +35,7 @@ object Upgrade : ApiHook() {
         get() = Settings.UpdateApi()
     val updateApi = Settings.UpdateApi()
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
+    private val nightlyRegex = Regex("""(.*)版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
     var fromSelf = true
     var isPrebuilt = true
     var isOsArchArm64 = true
@@ -168,7 +169,7 @@ object Upgrade : ApiHook() {
                 }
                 val body = data.optString("body").replace("\r\n", "\n")
                 Logger.debug { "Parsed body: $body" }
-                val values = changelogRegex.matchEntire(body)?.groupValues
+                val values = nightlyRegex.matchEntire(body)?.groupValues
                 if (values == null) {
                     Logger.debug { "Regex match failed for body: $body" }
                     break
