@@ -162,9 +162,10 @@ object Upgrade : ApiHook() {
             val type = "Nightly"
             for (data in response) {
                 Logger.debug { "Processing data: $data" }
-                if (!data.optString("tag_name").startsWith("$type-$mobiApp-$type"))
+                if (!data.optString("tag_name").startsWith("$type-$mobiApp-$type")) {
                     Logger.debug { "Skipping data due to tag_name not starting with $mobiApp- : ${data.optString("tag_name")}" }
                     continue
+                }
                 val body = data.optString("body").replace("\r\n", "\n")
                 Logger.debug { "Parsed body: $body" }
                 val values = changelogRegex.matchEntire(body)?.groupValues
