@@ -17,6 +17,14 @@
             android:key="tg_link"
             android:summary="@string/biliroaming_tg_url"
             android:title="@string/biliroaming_tg_title" />
+        <androidx.preference.Preference
+            android:key="fork_project_url"
+            android:summary="@string/biliroaming_fork_project_url"
+            android:title="@string/biliroaming_fork_project_title" />
+        <androidx.preference.Preference
+            android:key="fork_tg_link"
+            android:summary="@string/biliroaming_fork_tg_url"
+            android:title="@string/biliroaming_fork_tg_title" />
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory>

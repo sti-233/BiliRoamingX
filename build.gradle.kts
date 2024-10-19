@@ -45,14 +45,8 @@ fun Sync.distTask(release: Boolean) {
     from(project(":integrations:app").layout.buildDirectory.dir("outputs/apk/$path")) {
         include("*-$version.apk")
     }
-    from(project(":integrations:app").layout.buildDirectory.dir("outputs/mapping/$path")) {
-        include("mapping.txt")
-    }
     from(project(":patches").layout.buildDirectory.dir("libs")) {
         include("*-$version.jar")
-    }
-    from(project(":patches").layout.projectDirectory) {
-        include("patches.json")
     }
     into(layout.buildDirectory)
     doLast {
