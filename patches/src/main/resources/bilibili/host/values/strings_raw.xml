@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="biliroaming_release_host">https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases</string>
+    <string name="biliroaming_nightly_host">https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases/tag/Nightly</string>
+    <string name="biliroaming_original_host">https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases</string>
     <string name="biliroaming_server_url">https://github.com/yujincheng08/BiliRoaming/wiki/%E5%85%AC%E5%85%B1%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%99%A8</string>
     <string name="biliroaming_ali_host">upos-sz-mirrorali.bilivideo.com</string>
     <string name="biliroaming_alib_host">upos-sz-mirroralib.bilivideo.com</string>
@@ -23,5 +26,7 @@
     <string name="biliroaming_hk_bcache_host">cn-hk-eq-bcache-01.bilivideo.com</string>
     <string name="biliroaming_project_url">https://github.com/BiliRoamingX/BiliRoamingX</string>
     <string name="biliroaming_tg_url">https://t.me/bb_show</string>
-    <string name="biliroaming_feedback_url">https://github.com/BiliRoamingX/BiliRoamingX/issues/new/choose</string>
+    <string name="biliroaming_fork_project_url">https://github.com/sti-233/Bilix-PreBuilds</string>
+    <string name="biliroaming_fork_tg_url">https://t.me/Aniruf_x</string>
+    <string name="biliroaming_feedback_url">https://github.com/sti-233/Bilix-PreBuilds/issues/new</string>
 </resources>
