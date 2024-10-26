@@ -66,14 +66,14 @@ object Upgrade : ApiHook() {
     }
 
     private fun pagingCheck(page: Int): JSONObject? {
-        if (updateApi in listOf("https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases", "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases")) {
+        if (updateApi in listOf("sti-233/Bilix-PreBuilds", "BiliRoamingX/BiliRoamingX-PreBuilds")) {
             val context = Utils.getContext()
             val sn = context.packageManager.getApplicationInfo(
                 context.packageName, PackageManager.GET_META_DATA
             ).metaData.getInt("BUILD_SN").toLong()
             val patchVersion = BuildConfig.VERSION_NAME
             val patchVersionCode = BuildConfig.VERSION_CODE
-            val pageUrl = "$UPGRADE_CHECK_API?page=$page&per_page=100"
+            val pageUrl = "https://api.github.com/repos/$UPGRADE_CHECK_API/releases?page=$page&per_page=100"
             val response = JSONArray(URL(pageUrl).readText())
             val mobiApp = Utils.getMobiApp()
             for (data in response) {
@@ -103,7 +103,7 @@ object Upgrade : ApiHook() {
                 val patchVersionLong = convertVersion(patchVersion)
                 val infoPatchVersionLong = convertVersion(info.patchVersion)
                 Logger.debug { "BiliRoamingX version : now is $patchVersion->$patchVersionLong. Github is $info.patchVersion->$infoPatchVersionLong" }
-                if (sn < info.sn || (sn == info.sn && patchVersionLong < infoPatchVersionLong)) {
+                if (sn < info.sn || (sn == info.sn && patchVersionLong < infoPatchVersionLong ) || updateApi in listOf("BiliRoamingX/BiliRoamingX-PreBuilds")) {
                     Logger.debug { "New version available: $info" }
                     val sameApp = sn == info.sn
                     val samePatch = patchVersion == info.patchVersion
@@ -245,14 +245,10 @@ object Upgrade : ApiHook() {
 
     // 1.22.5.r1864
     // 102200501864
-    // 1.23.2->98005232704
-    // 1.23.2.r1975->98005234679
-    // 1.23.2.r1976->98005234680
-    // What the fuck?
     fun convertVersion(version: String): String {
         val parts = version.split(".")
         if (parts.size < 3) return "".also {
-            Logger.debug { "What the fuck? Why the versions don't match？" }
+            Logger.debug { "The versions don't match. $version" }
         }
         val major = parts[0]
         val minor = parts[1].padStart(3, '0')
