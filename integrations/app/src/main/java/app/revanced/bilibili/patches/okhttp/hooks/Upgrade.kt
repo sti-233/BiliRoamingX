@@ -73,7 +73,7 @@ object Upgrade : ApiHook() {
             ).metaData.getInt("BUILD_SN").toLong()
             val patchVersion = BuildConfig.VERSION_NAME
             val patchVersionCode = BuildConfig.VERSION_CODE
-            val pageUrl = "https://api.github.com/repos/$UPGRADE_CHECK_API/releases?page=$page&per_page=100"
+            val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=$page&per_page=100"
             val response = JSONArray(URL(pageUrl).readText())
             val mobiApp = Utils.getMobiApp()
             for (data in response) {
@@ -103,7 +103,7 @@ object Upgrade : ApiHook() {
                 val patchVersionLong = convertVersion(patchVersion)
                 val infoPatchVersionLong = convertVersion(info.patchVersion)
                 Logger.debug { "BiliRoamingX version : now is $patchVersion->$patchVersionLong. Github is $info.patchVersion->$infoPatchVersionLong" }
-                if (sn < info.sn || (sn == info.sn && patchVersionLong < infoPatchVersionLong ) || updateApi in listOf("BiliRoamingX/BiliRoamingX-PreBuilds")) {
+                if (sn < info.sn || (sn == info.sn && patchVersionLong < infoPatchVersionLong )) {
                     Logger.debug { "New version available: $info" }
                     val sameApp = sn == info.sn
                     val samePatch = patchVersion == info.patchVersion
