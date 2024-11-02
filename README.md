@@ -30,4 +30,4 @@ cd BiliRoamingX
 
 ## Licence
 
-[![GitHub](https://img.shields.io/github/license/BiliRoamingX/BiliRoamingX?style=for-the-badge)](https://github.com/BiliRoamingX/BiliRoamingX/blob/main/LICENSE)
+[![GitHub](https://img.shields.io/github/license/sti-233/BiliRoamingX?style=for-the-badge)](https://github.com/sti-233/BiliRoamingX/blob/main/LICENSE)
