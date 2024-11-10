@@ -45,7 +45,7 @@ jobs:
           echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Get resources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: sti-233/Close-BiliRoamingX
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
