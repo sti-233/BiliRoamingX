@@ -44,11 +44,18 @@ jobs:
           version="${version}.r${commit_count}"
           echo "VERSION=$version" >> $GITHUB_ENV
 
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Get resources
         uses: actions/checkout@v4
         with:
           repository: sti-233/Close-BiliRoamingX
-          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          ssh-strict: true
+          persist-credentials: true
+          clean: false
 
       - name: Build with gradle
         env:
