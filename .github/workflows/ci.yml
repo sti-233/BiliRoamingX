@@ -44,11 +44,11 @@ jobs:
           version="${version}.r${commit_count}"
           echo "VERSION=$version" >> $GITHUB_ENV
 
-          - name: Get resources
-          uses: actions/checkout@v2
-          with:
-            repository: sti-233/Close-BiliRoamingX
-            token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+      - name: Get resources
+        uses: actions/checkout@v2
+        with:
+          repository: sti-233/Close-BiliRoamingX
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
 
       - name: Build with gradle
         env:
