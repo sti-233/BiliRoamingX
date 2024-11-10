@@ -55,7 +55,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           rm ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
-          ssh -T git@github.com -y
           git clone git@github.com:sti-233/Close-BiliRoamingX.git
           mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
           ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g -Pversion=$VERSION dist
