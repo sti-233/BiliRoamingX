@@ -13,3 +13,4 @@
 /patches/bin/main/*
 /integrations/ksp/bin/main/*
 /build-logic/bin/main/*
+/integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
