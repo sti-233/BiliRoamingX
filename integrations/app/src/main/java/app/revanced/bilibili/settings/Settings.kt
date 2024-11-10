@@ -287,5 +287,6 @@ object Settings {
     @JvmField val CustomColor = IntSetting(key = "biliroaming_custom_color", defValue = Color.WHITE)
     @JvmField val SkinJson = StringSetting(key = "skin_json", dependency = Skin)
     @JvmField val SelectedPlaybackSpeed = FloatSetting(key = "selected_playback_speed")
+    @JvmField val SponsorBlockEnabled = BooleanSetting(key = "enable_sponsor_block_fragment", defValue = true)
     // endregion
 }

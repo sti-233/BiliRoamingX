@@ -45,6 +45,13 @@
 
     <androidx.preference.PreferenceCategory>
         <androidx.preference.Preference
+            android:title="@string/biliroaming_sb_category_title"
+            android:key="sb_category"
+            android:fragment="app.revanced.bilibili.settings.fragments.SponsorBlockFragment" />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory>
+        <androidx.preference.Preference
             android:fragment="app.revanced.bilibili.settings.fragments.MiscFragment"
             android:key="misc"
             android:title="@string/biliroaming_misc_title" />

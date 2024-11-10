@@ -82,3 +82,6 @@ class PurifySearchTypesFragment : BiliRoamingBaseSettingFragment()
 
 @SettingFragment("biliroaming_setting_custom_update_source")
 class UpdateSettingFragment : BiliRoamingBaseSettingFragment()
+
+@SettingFragment("biliroaming_setting_sponsor")
+class SponsorBlockSettingFragment : BiliRoamingBaseSettingFragment()
