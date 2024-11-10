@@ -44,6 +44,7 @@ jobs:
           version="${version}.r${commit_count}"
           echo "VERSION=$version" >> $GITHUB_ENV
 
+      # try setup ssh
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.2
         with:
