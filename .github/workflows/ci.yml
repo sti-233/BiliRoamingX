@@ -46,7 +46,7 @@ jobs:
 
       - name: Build with gradle
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
         run: |
           rm ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
           git clone git@github.com:sti-233/Close-BiliRoamingX.git
