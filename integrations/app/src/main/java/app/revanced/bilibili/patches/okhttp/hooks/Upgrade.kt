@@ -86,6 +86,8 @@ object Upgrade : ApiHook() {
             var useTag = "Nightly-$mobiApp-"
             var useTitle = "新版 Bilix-Nightly"
         } else {
+            var useTag = "Official"
+            var useTitle = "Official BiliRoamingX"
             return null
         }
         for (data in response) {
