@@ -79,6 +79,8 @@ object Upgrade : ApiHook() {
         val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=$page&per_page=100"
         val response = JSONArray(URL(pageUrl).readText())
         val mobiApp = Utils.getMobiApp()
+        var useTag = "Unknown"
+        var useTitle = "New BiliRoamingx"
         if (updateSource == "Bilix-Latest-Foss") {
             var useTag = "$mobiApp-"
             var useTitle = "新版 Bilix"
@@ -86,8 +88,6 @@ object Upgrade : ApiHook() {
             var useTag = "Nightly-$mobiApp-"
             var useTitle = "新版 Bilix-Nightly"
         } else {
-            var useTag = "Official"
-            var useTitle = "Official BiliRoamingX"
             return null
         }
         for (data in response) {
