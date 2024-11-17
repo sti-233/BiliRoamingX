@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="biliroaming_custom_update_source_title">自定义更新源</string>
-    <string name="biliroaming_custom_update_source_summary">不同源间可能签名不同,请谨慎选择 !</string>
     <string name="biliroaming_settings_title">BiliRoamingX</string>
     <string name="biliroaming_full_screen_quality_title">视频全屏清晰度</string>
     <string name="biliroaming_full_screen_quality_wifi_title">Wi-Fi网络视频全屏清晰度</string>
@@ -497,6 +495,9 @@
     <string name="biliroaming_old_dm_panel_title">恢复旧版弹幕设置面板</string>
     <string name="biliroaming_old_dm_panel_summary">目前主要区别在于旧版有弹幕优选，可以过滤更多弹幕</string>
     <string name="biliroaming_live_no_block_title">屏蔽实名认证弹窗</string>
+    <!-- From fork -->
+    <string name="biliroaming_custom_update_source_title">自定义更新源</string>
+    <string name="biliroaming_custom_update_source_summary">不同源间可能签名不同,请谨慎选择 !</string>
     <!-- From official 1.24.1 -->
     <string name="biliroaming_disable_comm_skin_summary">启用自制主题后会默认禁用节日主题</string>
     <string name="biliroaming_disable_comm_skin_title">禁用节日主题</string>
@@ -676,4 +677,7 @@
     <string name="biliroaming_sb_vote_success">投票成功</string>
     <string name="biliroaming_sb_vote_timeout">投票失败，超时</string>
     <string name="biliroaming_sb_vote_upvote">赞成票</string>
+    <!-- From official 1.25.0 (partial)-->
+    <string name="biliroaming_report_title">举报用户</string>
+    <string name="biliroaming_report_summary">举报违规用户，共同维护良好使用环境</string>
 </resources>

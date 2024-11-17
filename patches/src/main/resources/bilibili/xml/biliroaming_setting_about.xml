@@ -28,6 +28,13 @@
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory>
+        <androidx.preference.Preference
+            android:key="report"
+            android:summary="@string/biliroaming_report_summary"
+            android:title="@string/biliroaming_report_title" />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory>
         <androidx.preference.SwitchPreferenceCompat
             android:key="debug"
             android:title="@string/biliroaming_debug_title" />

@@ -68,6 +68,12 @@ class AboutFragment : BiliRoamingBaseSettingFragment() {
             startActivity(intent)
             true
         }
+        findPreference<Preference>("report")?.onClick {
+            val uri = Uri.parse("https://black.qimo.ink")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+            true
+        }
         findPreference<Preference>("share_log")?.run {
             onClick { Utils.async { shareLog() }; true }
         }
