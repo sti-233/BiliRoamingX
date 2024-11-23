@@ -132,6 +132,15 @@ public class Utils {
         System.exit(0);
     }
 
+    public static void exit() {
+        Context context = getContext();
+        ActivityManager am = context.getSystemService(ActivityManager.class);
+        if (am != null)
+            for (ActivityManager.AppTask task : am.getAppTasks())
+                task.finishAndRemoveTask();
+        System.exit(0);
+    }
+
     @Keep
     public static String getMobiApp() {
         if (TextUtils.isEmpty(mobiApp)) {

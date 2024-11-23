@@ -39,14 +39,9 @@ class MiscFragment : BiliRoamingBaseSettingFragment() {
             if (newValue == true) selectImage(SELECTION_LOGO)
             true
         }
-        //disablePreference(
-            //key = Settings.CustomUpdate.key,
-            //{ Utils.getString("biliroaming_custom_update_only_64") } to { !isOsArchArm64 },
-            //{ Utils.getString("biliroaming_custom_update_invalid_sig") } to { !isPrebuilt }
-        //)
-        //disablePreference(Settings.Skin.key, PrefsDisableReason.AppVersion) {
-            //Utils.isHd()
-        //}
+        disablePreference(Settings.Skin.key, PrefsDisableReason.AppVersion) {
+            Utils.isHd()
+        }
     }
 
     override fun onPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
