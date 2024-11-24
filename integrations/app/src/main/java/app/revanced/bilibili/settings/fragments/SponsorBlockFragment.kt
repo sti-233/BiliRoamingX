@@ -30,4 +30,5 @@ class SponsorBlockFragment : BiliRoamingBaseSettingFragment() {
             startActivity(intent)
             true
         }
+    }
 }
