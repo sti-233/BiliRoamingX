@@ -18,6 +18,9 @@ class CustomizePlayerFragment : BiliRoamingBaseSettingFragment() {
         findPreference<Preference>("long_press_speed")?.onClick { onPlaybackSpeedClick(true) }
         findPreference<Preference>("override_speed")?.onClick { onPlaybackSpeedOverrideClick() }
         findPreference<Preference>("custom_access_key")?.onClick { onCustomAccessKey() }
+        disablePreference(Settings.ForceHwCodec.key, PrefsDisableReason.AppVersion) {
+            Versions.ge8_15_0()
+        }
     }
 
     private fun onPlaybackSpeedClick(longPress: Boolean): Boolean {

@@ -498,6 +498,11 @@
     <!-- From fork -->
     <string name="biliroaming_custom_update_source_title">自定义更新源</string>
     <string name="biliroaming_custom_update_source_summary">不同源间可能签名不同,请谨慎选择 !</string>
+    <string name="biliroaming_enable_new_feature_title">启用本 Fork 添加的功能</string>
+    <string name="biliroaming_enable_new_feature_summary">几乎没有</string>
+    <string name="biliroaming_unfinished_feature_summary">此项暂时无用</string>
+    <string name="biliroaming_exit_title">退出</string>
+    <string name="biliroaming_exit_summary">结束所有BiliBili的进程</string>
     <!-- From official 1.24.1 -->
     <string name="biliroaming_disable_comm_skin_summary">启用自制主题后会默认禁用节日主题</string>
     <string name="biliroaming_disable_comm_skin_title">禁用节日主题</string>

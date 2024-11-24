@@ -36,6 +36,10 @@
 
     <androidx.preference.PreferenceCategory>
         <androidx.preference.SwitchPreferenceCompat
+            android:key="enable_new_feature"
+            android:summary="@string/biliroaming_enable_new_feature_summary"
+            android:title="@string/biliroaming_enable_new_feature_title" />
+        <androidx.preference.SwitchPreferenceCompat
             android:key="debug"
             android:title="@string/biliroaming_debug_title" />
         <androidx.preference.Preference

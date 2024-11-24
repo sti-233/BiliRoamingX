@@ -46,6 +46,7 @@
     <androidx.preference.PreferenceCategory>
         <androidx.preference.Preference
             android:title="@string/biliroaming_sb_category_title"
+            android:summary="@string/biliroaming_unfinished_feature_summary"
             android:key="sb_category"
             android:fragment="app.revanced.bilibili.settings.fragments.SponsorBlockFragment" />
     </androidx.preference.PreferenceCategory>
@@ -69,6 +70,10 @@
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory>
+        <androidx.preference.Preference
+            android:key="exit"
+            android:title="@string/biliroaming_exit_title"
+            android:summary="@string/biliroaming_exit_summary" />
         <androidx.preference.Preference
             android:key="reboot"
             android:title="@string/biliroaming_reboot_title" />

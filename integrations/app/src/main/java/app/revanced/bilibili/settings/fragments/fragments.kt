@@ -79,6 +79,3 @@ class RemoveVideoPopupsFragment : BiliRoamingBaseSettingFragment()
 
 @SettingFragment("biliroaming_setting_purify_search_types")
 class PurifySearchTypesFragment : BiliRoamingBaseSettingFragment()
-
-@SettingFragment("biliroaming_setting_custom_update_source")
-class UpdateSettingFragment : BiliRoamingBaseSettingFragment()
