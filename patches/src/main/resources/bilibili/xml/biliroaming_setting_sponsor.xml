@@ -30,48 +30,6 @@
             android:title="@string/biliroaming_sb_length_without_segments_title" />
     </androidx.preference.PreferenceCategory>
 
-<!--
-    <androidx.preference.PreferenceCategory
-        android:key=""
-        android:layout="@layout/bili_app_layout_preference_category_title"
-        android:title="@string/">
-        <androidx.preference.Preference
-            android:key=""
-            android:summary="@string/_summary"
-            android:title="@string/_title" />
-    </androidx.preference.PreferenceCategory>
-
-    <androidx.preference.PreferenceCategory
-        android:key=""
-        android:layout="@layout/bili_app_layout_preference_category_title"
-        android:title="@string/">
-        <androidx.preference.Preference
-            android:key=""
-            android:summary="@string/_summary"
-            android:title="@string/_title" />
-    </androidx.preference.PreferenceCategory>
-
-    <androidx.preference.PreferenceCategory
-        android:key=""
-        android:layout="@layout/bili_app_layout_preference_category_title"
-        android:title="@string/">
-        <androidx.preference.Preference
-            android:key=""
-            android:summary="@string/_summary"
-            android:title="@string/_title" />
-    </androidx.preference.PreferenceCategory>
-
-    <androidx.preference.PreferenceCategory
-        android:key=""
-        android:layout="@layout/bili_app_layout_preference_category_title"
-        android:title="@string/">
-        <androidx.preference.Preference
-            android:key=""
-            android:summary="@string/_summary"
-            android:title="@string/_title" />
-    </androidx.preference.PreferenceCategory>
--->
-
     <androidx.preference.PreferenceCategory
         android:key="sb_category_about"
         android:layout="@layout/bili_app_layout_preference_category_title"
