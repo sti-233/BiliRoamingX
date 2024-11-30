@@ -35,7 +35,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # try setup ssh
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Build with gradle
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g dist
+        run: |
+          rm ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
+          rm ./integrations/app/src/main/java/app/revanced/bilibili/utils/KtUtils.kt
+          git clone git@github.com:sti-233/Close-BiliRoamingX.git
+          mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
+          mv ./Close-BiliRoamingX/KtUtils.kt ./integrations/app/src/main/java/app/revanced/bilibili/utils/KtUtils.kt
+          ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g dist
