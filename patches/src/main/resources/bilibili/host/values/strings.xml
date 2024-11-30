@@ -502,7 +502,8 @@
     <string name="biliroaming_enable_new_feature_summary">几乎没有</string>
     <string name="biliroaming_unfinished_feature_summary">此项暂时无用</string>
     <string name="biliroaming_exit_title">退出</string>
-    <string name="biliroaming_exit_summary">结束所有BiliBili的进程</string>
+    <string name="biliroaming_exit_summary">结束BiliBili的所有进程</string>
+    <string name="biliroaming_account_reason">未满足启用此项的条件</string>
     <!-- From official 1.24.1 -->
     <!-- biliroaming_setting_sponsor.xml -->
     <string name="biliroaming_sb_enabled_title">启用空降助手</string>
