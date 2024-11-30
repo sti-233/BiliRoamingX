@@ -32,6 +32,7 @@ sealed class PrefsDisableReason {
     object OSVersion : PrefsDisableReason()
     object NewPlayer : PrefsDisableReason()
     object OfficialSupported : PrefsDisableReason()
+    object Account : PrefsDisableReason()
 }
 
 @Suppress("DEPRECATION")
@@ -363,6 +364,10 @@ abstract class BiliRoamingBaseSettingFragment(private var prefsXmlName: String =
 
             PrefsDisableReason.OfficialSupported -> {
                 { Utils.getString("biliroaming_official_supported") }
+            }
+
+            PrefsDisableReason.Account -> {
+                { Utils.getString("biliroaming_account_reason") }
             }
         }
         disablePreference(key, reason to condition)

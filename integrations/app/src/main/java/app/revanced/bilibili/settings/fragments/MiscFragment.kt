@@ -42,6 +42,9 @@ class MiscFragment : BiliRoamingBaseSettingFragment() {
         disablePreference(Settings.Skin.key, PrefsDisableReason.AppVersion) {
             Utils.isHd()
         }
+        disablePreference(Settings.CustomUpdate.key, PrefsDisableReason.Account) {
+            Settings.NewFeatureEnabled()
+        }
     }
 
     override fun onPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {

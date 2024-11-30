@@ -11,6 +11,7 @@ import app.revanced.bilibili.utils.onClick
 class BiliRoamingSettingsFragment : BiliRoamingBaseSettingFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
+        findPreference<Preference>("exit")?.onClick { Utils.exit(); true }
         findPreference<Preference>("reboot")?.onClick { Utils.reboot(); true }
     }
 
