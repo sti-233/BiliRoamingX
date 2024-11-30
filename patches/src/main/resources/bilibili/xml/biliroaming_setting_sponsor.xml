@@ -39,3 +39,4 @@
             android:summary="@string/biliroaming_sb_about_url_summary"
             android:title="@string/biliroaming_sb_about_url_title" />
     </androidx.preference.PreferenceCategory>
+</androidx.preference.PreferenceScreen>
