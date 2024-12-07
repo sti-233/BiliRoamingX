@@ -19,8 +19,8 @@
 > ~~同时 Bug 也很多~~
 >
 > 若需"SponsorBlock(空降助手)"等功能<br/>
-> 更建议使用
-> [官方1.24.1/1.25.0](https://t.me/bb_show)或[bggRGjQaUbCoE/PiliPalaX](https://github.com/bggRGjQaUbCoE/PiliPalaX)
+> 请使用
+> [官方1.24.1/1.25.0](https://t.me/bb_show)
 
 基于 ReVanced 实现的B站 Android 客户端增强模块。模块设置完美融入 APP 设置，功能丰富，自定义程度高。
 得益于实现方式，对 APP 性能几乎没有影响，流畅、迅速、启动快。支持粉版、Play 版及 HD 版。
