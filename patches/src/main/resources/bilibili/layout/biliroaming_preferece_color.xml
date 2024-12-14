@@ -9,7 +9,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/biliroaming_bg_show_color" />
+        android:background="@drawable/biliroaming_bg_color_preview" />
 
     <LinearLayout
         android:layout_width="0dp"
