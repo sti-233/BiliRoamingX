@@ -3,7 +3,7 @@ package app.revanced.patches.bilibili.video.player.patch
 import app.revanced.patcher.data.Method
 import app.revanced.patcher.patch.Patch
 import app.revanced.patcher.patch.PatchContext
-import app.revanced.patches.bilibili.video.player.fingerprints.W2MethodFingerprint
+import app.revanced.patches.bilibili.video.player.fingerprints.PlayerCrashedMethodFingerprint
 
 class W2MethodPatch : Patch {
     override fun onApply(context: PatchContext) {
