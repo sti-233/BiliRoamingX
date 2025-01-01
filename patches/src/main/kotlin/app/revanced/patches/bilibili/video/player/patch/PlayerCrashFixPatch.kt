@@ -1,4 +1,4 @@
-package app.revanced.patches.bilibili.video.player
+package app.revanced.patches.bilibili.video.player.patch
 
 import app.revanced.patcher.data.Method
 import app.revanced.patcher.patch.Patch
