@@ -4,6 +4,5 @@ import app.revanced.patcher.fingerprint.MethodFingerprint
 
 object PlaylistOGVMiniPlayerServiceFingerprint : MethodFingerprint(
     strings = listOf("theseus-playlist", "tryStartMiniPlayerPlay, ", "PlaylistOGVMiniPlayerService"),
-    parameters = listOf("Lcom/bilibili/ship/theseus/united/page/miniplayer/DetailMiniPlayerService$b;"),
     returnType = "V"
 )
