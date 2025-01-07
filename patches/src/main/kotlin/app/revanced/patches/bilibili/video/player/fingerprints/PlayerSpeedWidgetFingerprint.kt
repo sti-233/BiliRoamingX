@@ -5,6 +5,6 @@ import app.revanced.patches.bilibili.patcher.fingerprint.MultiMethodFingerprint
 object PlayerSpeedWidgetFingerprint : MultiMethodFingerprint(
     strings = listOf("player.player.speed.0.player"),
     customFingerprint = { _, classDef ->
-        classDef.type.endsWith("PlayerSpeedWidget;")
+        classDef.type.endsWith("control/PlayerSpeedWidget;")
     }
 )
