@@ -4,5 +4,5 @@ import app.revanced.patcher.fingerprint.MethodFingerprint
 
 object PlayerSettingHelperFingerprint : MethodFingerprint(
     returnType = "I",
-    strings = listOf("PlayerSettingHelper", "get free data failed")
+    strings = listOf("PlayerSettingHelper", " defaultQuality:")
 )
