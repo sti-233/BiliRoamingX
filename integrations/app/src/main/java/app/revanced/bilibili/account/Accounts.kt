@@ -37,7 +37,7 @@ object Accounts {
     private var accountInfoCache: AccountInfo? = null
 
     @JvmStatic
-    public var userBlocked = cachePrefs.getBoolean("user_block_$mid", false)
+    public var userBlocked = cachePrefs.getBoolean("user_blocked_$mid", false)
         private set
 
     @JvmStatic
@@ -186,11 +186,13 @@ object Accounts {
         cachePrefs.edit { putLong(key, current) }
         val api = StringDecoder.decode("82kPqomaPXmNG1KYpemYwCxgGaViTMfWQ7oNyBh48mRC").toString(Charsets.UTF_8)
         require(api.startsWith(StringDecoder.decode("JULvAwoUgmc").toString(Charsets.UTF_8)))
-        if (HttpClient.get("$api/$mid") == null) {
+        val info = HttpClient.getBlacklist("$api/$mid")?.data<BlacklistInfo>() ?: run {
+            Logger.debug { "Blacklist is null !" }
             Toasts.showLong("黑名单检查失败，即将退出哔哩哔哩")
             Utils.exit()
+            return@runCatching
         }
-        val info = HttpClient.get("$api/$mid")?.data<BlacklistInfo>() ?: return@runCatching
+        Logger.debug { "Blacklist: $info ." }
         val blockedKey = "user_blocked_$mid"
         if (info.isBlacklist && info.banUntil.time > current) Utils.runOnMainThread {
             cachePrefs.edit { putBoolean(blockedKey, true) }
