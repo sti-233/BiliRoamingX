@@ -16,7 +16,6 @@ object PlayerDrawProgressSeekbarFingerprint : MethodFingerprint(
         Opcode.INVOKE_VIRTUAL,
         Opcode.IGET_OBJECT,
         Opcode.IGET_OBJECT,
-        Opcode.INVOKE_STATIC,
         Opcode.INVOKE_DIRECT,
         Opcode.RETURN_VOID
     ),
