@@ -4,6 +4,6 @@ import app.revanced.patcher.fingerprint.MethodFingerprint
 
 object NotificationStyleAbFingerprint : MethodFingerprint(
     strings = listOf("dd_enable_system_media_control"),
-    returnType = "Z",
+    returnType = "Ljava/lang/Boolean;",
     parameters = listOf()
 )
