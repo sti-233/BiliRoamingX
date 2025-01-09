@@ -1,9 +1,9 @@
 package app.revanced.patches.bilibili.video.player.fingerprints
 
-import app.revanced.patcher.fingerprint.MethodFingerprint
+import app.revanced.patches.bilibili.patcher.fingerprint.MultiMethodFingerprint
 import com.android.tools.smali.dexlib2.Opcode
 
-object PlayerProgressTextWidgetFingerprint : MethodFingerprint(
+object PlayerProgressTextWidgetFingerprint : MultiMethodFingerprint(
     parameters = listOf("II"),
     returnType = "V",
     opcodes = listOf(
