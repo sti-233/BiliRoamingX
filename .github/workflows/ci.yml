@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - dev
+      - SponsorBlockPatch
     paths-ignore:
       - '**.md'
       - '.github/**'
