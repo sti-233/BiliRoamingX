@@ -471,8 +471,8 @@
     <string name="biliroaming_export_access_key_title">复制访问密钥</string>
     <string name="biliroaming_export_access_key_summary">复制当前账号访问密钥，即access_key</string>
     <string name="biliroaming_access_key_copied">已复制到剪贴板</string>
-    <string name="biliroaming_unlock_gif_title">允许非会员用户上传GIF动图</string>
-    <string name="biliroaming_unlock_gif_summary">同时图片显示一视同仁，统一去掉右上角大专属图标，放大1.5倍</string>
+    <string name="biliroaming_unlock_gif_summary" public="false">图片右上角不显示大专属图标</string>
+    <string name="biliroaming_unlock_gif_title" public="false">图片不显示大专属图标</string>
     <string name="biliroaming_disable_non_official_alert_title">禁用打开非官方网页警告</string>
     <string name="biliroaming_disable_non_official_alert_summary">禁用内部浏览器打开非官方网页时底部横条警告</string>
     <string name="biliroaming_tool_title">工具</string>
@@ -722,8 +722,6 @@
     <string name="biliroaming_sb_disable_for_pgc_summary" public="false">PGC内容不启用空降功能，PGC指番剧、电影、综艺、电视剧等专业制作内容</string>
     <string name="biliroaming_sb_disable_for_pgc_title" public="false">PGC内容不启用</string>
     <string name="biliroaming_support_title" public="false">赞赏作者</string>
-    <string name="biliroaming_unlock_gif_summary" public="false">图片右上角不显示大专属图标</string>
-    <string name="biliroaming_unlock_gif_title" public="false">图片不显示大专属图标</string>
     <string name="biliroaming_view_detail" public="false">查看详情</string>
     <string name="biliroaming_wechat_qrcode_filename" public="false">漫游X赞赏二维码-%s.jpg</string>
     <string name="biliroaming_wechat_qrcode_save_failed" public="false">赞赏二维码保存失败</string>
