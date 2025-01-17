@@ -10,7 +10,7 @@
     <string name="biliroaming_block_up_rcmd_ads_title">屏蔽UP主推荐广告</string>
     <string name="biliroaming_block_up_rcmd_ads_summary">屏蔽视频下方推荐栏及视频播放过程中，浮窗出现的UP主推荐广告，开启后会同时屏蔽评论区顶部推广横幅</string>
     <string name="biliroaming_half_screen_quality_title">视频半屏清晰度</string>
-    <string name="biliroaming_half_screen_quality_summary">设置视频半屏播放时的清晰度，设置后会大幅降低视频的首次播放加载速度，旧版播放器仅支持跟随全屏清晰度</string>
+    <string name="biliroaming_half_screen_quality_summary">设置视频半屏播放时的清晰度，旧版播放器仅支持跟随全屏清晰度</string>
     <string name="biliroaming_need_reboot_dialog_message">需要重启才能生效</string>
     <string name="biliroaming_need_reboot_dialog_confirm">立即重启</string>
     <string name="biliroaming_need_reboot_dialog_later">稍后</string>
@@ -270,9 +270,9 @@
     <string name="biliroaming_toast_backup_success">备份成功</string>
     <string name="biliroaming_dialog_msg_restore_success">恢复成功，需要重启才能生效</string>
     <string name="biliroaming_usage_hint_title">使用说明</string>
-    <string name="biliroaming_usage_hint_message">欢迎使用基于ReVanced方案的修改版哔哩哔哩。以下几点说明请仔细阅读：\n\n1. 本修改方案完全开源免费，谨防被骗。\n2. 本修改版不使用Xposed框架，追求极致性能。\n3. 请勿在B站任何地方暗示/提及/宣传本修改版，否则将会被拉入黑名单，模块所有功能将被停用。\n4. 设置入口：我的 -> 设置 -> BiliRoamingX。</string>
+    <string name="biliroaming_usage_hint_message">欢迎使用 BiliRoamingX，以下几点说明请仔细阅读：&lt;br&gt;&lt;br&gt;1. 本模块完全&lt;b&gt;免费&lt;/b&gt;，谨防被骗。&lt;br&gt;2. 本模块基于ReVanced，不使用Xposed框架，追求极致性能。&lt;br&gt;3. &lt;b&gt;请勿&lt;/b&gt;在B站任何地方暗示/提及/宣传，违者账号拉黑；以及&lt;b&gt;禁止&lt;/b&gt;在国内公众平台宣传。&lt;br&gt;4. 可在哔哩漫游X关于页面举报违规用户。&lt;br&gt;5. 需要&lt;b&gt;登录才能使用。&lt;br&gt;6. 设置入口：我的 -&gt; 设置 -&gt; BiliRoamingX。</string>
     <string name="biliroaming_get_it">我知道了</string>
-    <string name="biliroaming_jump_settings">前往设置</string>
+    <string name="biliroaming_jump_settings">了解并前往设置</string>
     <string name="biliroaming_hint_open_from_mine">请最好在登录状态下通过我的页面设置入口进入本页面以获取所有项目</string>
     <string name="biliroaming_music_notification_title">原生音乐通知样式</string>
     <string name="biliroaming_music_notification_summary">强制音乐通知为原生样式</string>
@@ -419,7 +419,7 @@
     <string name="biliroaming_keep_data_title">APP卸载时保留数据</string>
     <string name="biliroaming_keep_data_summary">适配 Android 10 APP卸载时保留应用数据特性。</string>
     <string name="biliroaming_check_comment_title">报告评论审查结果</string>
-    <string name="biliroaming_check_comment_summary">检测评论是否正常发布并公开，带图评论结果仅供参考</string>
+    <string name="biliroaming_check_comment_summary">检测评论是否正常发布并公开，结果仅供参考</string>
     <string name="biliroaming_check_comment_toast">评论审核结果将在%1$s秒后报告。</string>
     <string name="biliroaming_comment_check_result_title">评论检查结果</string>
     <string name="biliroaming_comment_invalid_quick_blocked">⚠️你发布的评论瞬间被阿瓦隆自净系统屏蔽，仅本人可见。</string>
@@ -688,4 +688,47 @@
     <!-- From official 1.25.0 (partial)-->
     <string name="biliroaming_report_title">举报用户</string>
     <string name="biliroaming_report_summary">举报违规用户，共同维护良好使用环境</string>
+    <!-- From official 1.25.6 -->
+    <string name="biliroaming_alipay_open_failed" public="false">支付宝打开失败</string>
+    <string name="biliroaming_always_mini_play_summary" public="false">播放器上方菜单栏始终显示小窗按钮</string>
+    <string name="biliroaming_always_mini_play_title" public="false">始终显示小窗按钮</string>
+    <string name="biliroaming_blacklist_check_error" public="false">黑名单检查失败，即将退出哔哩哔哩</string>
+    <string name="biliroaming_block_activity_label_summary" public="false">例如活动、热门等</string>
+    <string name="biliroaming_block_activity_label_title" public="false">隐藏标题旁的标签</string>
+    <string name="biliroaming_block_back_summary" public="false">播放页多窗口模式下禁用返回操作，防止误触</string>
+    <string name="biliroaming_block_back_title" public="false">多窗口模式下禁用返回</string>
+    <string name="biliroaming_block_comment_op_search_title" public="false">屏蔽“大家都在搜”</string>
+    <string name="biliroaming_blocked_description_with_reason" public="false">你因违反哔哩漫游X使用规则已被拉入黑名单，模块所有功能将不可用。
+解封时间：%1$s
+理由：%2$s</string>
+    <string name="biliroaming_clear_audio_summary" public="false">非大会员用户清除不可用的Hi-Res和Dolby音频，播放器内不显示相关按钮</string>
+    <string name="biliroaming_clear_audio_title" public="false">清除不可用音频</string>
+    <string name="biliroaming_comment_check_app_launch_failed" public="false">哔哩发评反诈APP启动失败</string>
+    <string name="biliroaming_comment_outside_check" public="false">哔哩发评反诈检查</string>
+    <string name="biliroaming_force_old_comments_title" public="false">恢复旧版评论区样式</string>
+    <string name="biliroaming_force_old_favorite_title" public="false">恢复旧版收藏页</string>
+    <string name="biliroaming_install_alipay_first" public="false">请先安装支付宝</string>
+    <string name="biliroaming_mini_follow_full_summary" public="false">视频小窗清晰度跟随全屏清晰度，至高4K</string>
+    <string name="biliroaming_mini_follow_full_title" public="false">小窗清晰度跟随全屏清晰度</string>
+    <string name="biliroaming_normal_title_summary" public="false">投稿视频标题字体不加粗，官方新版的加粗实现效果较好，酌情启用</string>
+    <string name="biliroaming_normal_title_title" public="false">标题字体不加粗</string>
+    <string name="biliroaming_old_tab_summary" public="false">采用Jetpack Compose组件编写的新版动画页和影视页性能极差，若页面滑动卡顿，可启用此选项。</string>
+    <string name="biliroaming_old_tab_title" public="false">恢复旧版动画页和影视页</string>
+    <string name="biliroaming_pic_no_fold_summary" public="false">部分图片可能会被折叠不可见</string>
+    <string name="biliroaming_pic_no_fold_title" public="false">禁止折叠图片</string>
+    <string name="biliroaming_pls_install_comment_check_app" public="false">请先安装或启用哔哩发评反诈APP</string>
+    <string name="biliroaming_prefer_bottom_tab_title" public="false">首选底栏</string>
+    <string name="biliroaming_recheck" public="false">重查</string>
+    <string name="biliroaming_sb_disable_for_pgc_summary" public="false">PGC内容不启用空降功能，PGC指番剧、电影、综艺、电视剧等专业制作内容</string>
+    <string name="biliroaming_sb_disable_for_pgc_title" public="false">PGC内容不启用</string>
+    <string name="biliroaming_support_title" public="false">赞赏作者</string>
+    <string name="biliroaming_unlock_gif_summary" public="false">图片右上角不显示大专属图标</string>
+    <string name="biliroaming_unlock_gif_title" public="false">图片不显示大专属图标</string>
+    <string name="biliroaming_view_detail" public="false">查看详情</string>
+    <string name="biliroaming_wechat_qrcode_filename" public="false">漫游X赞赏二维码-%s.jpg</string>
+    <string name="biliroaming_wechat_qrcode_save_failed" public="false">赞赏二维码保存失败</string>
+    <string name="biliroaming_wechat_qrcode_save_ok" public="false">微信赞赏二维码已保存到相册，点按相册按钮选择即可</string>
+    <string name="biliroaming_wechat_qrcode_scan" public="false">微信赞赏二维码已保存到相册，使用微信扫一扫打开</string>
+    <string name="biliroaming_get_it_b" public="false">了解</string>
+    <string name="biliroaming_exit" public="false">退出</string>
 </resources>
