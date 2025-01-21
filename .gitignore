@@ -10,3 +10,6 @@
 /.idea/*
 !/.idea/codeStyles
 .kotlin
+/patches/bin/main/*
+/integrations/ksp/bin/main/*
+/build-logic/bin/main/*

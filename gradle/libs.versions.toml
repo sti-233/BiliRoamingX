@@ -1,23 +1,23 @@
 [versions]
 # integrations
-agp = "8.6.1"
+agp = "8.7.3"
 hiddenapibypass = "4.3"
 truetypeparser = "2.1.4"
 androidx-documentfile = "1.0.1"
-androidx-annotation = "1.8.2"
+androidx-annotation = "1.9.1"
 androidx-appcompat = "1.7.0"
 androidx-preference = "1.2.1"
 androidx-recyclerview = "1.3.2"
-protobuf = "4.28.2"
+protobuf = "4.29.2"
 kotlinx-serialization = "1.7.3"
-fastjson = "1.2.83"
+fastjson = "2.0.53"
 # patches
-revanced-patcher = "19.3.1"
+revanced-patcher = "19.3.1.1"
 smali = "3.0.3"
 gson = "2.11.0"
-kotlin = "2.0.20"
-ksp = "2.0.20-1.0.25"
-kotlinpoet-ksp = "1.18.1"
+kotlin = "2.1.0"
+ksp = "2.1.0-1.0.29"
+kotlinpoet-ksp = "2.0.0"
 
 [libraries]
 gradle-plugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
