@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="biliroaming_release_host">sti-233/Bilix-PreBuilds</string>
+    <string name="biliroaming_nightly_host">sti-233/Bilix-PreBuilds?type=Nightly</string>
+    <string name="biliroaming_original_host">BiliRoamingX/BiliRoamingX-PreBuilds</string>
     <string name="biliroaming_server_url">https://github.com/yujincheng08/BiliRoaming/wiki/%E5%85%AC%E5%85%B1%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%99%A8</string>
     <string name="biliroaming_ali_host">upos-sz-mirrorali.bilivideo.com</string>
     <string name="biliroaming_alib_host">upos-sz-mirroralib.bilivideo.com</string>

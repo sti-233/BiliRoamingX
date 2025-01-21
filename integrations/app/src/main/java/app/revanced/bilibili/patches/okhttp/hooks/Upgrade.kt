@@ -31,12 +31,14 @@ class BUpgradeInfo(
 }
 
 object Upgrade : ApiHook() {
-    private const val UPGRADE_CHECK_API = "https://api.github.com/repos/BiliRoamingX/BiliRoamingX-PreBuilds/releases"
+    private val UPGRADE_CHECK_API: String
+        get() = Settings.UpdateApi()
+    val updateSource = Settings.UpdateApi()
     private val changelogRegex = Regex("""版本信息：(.*?)\n(.*)""", RegexOption.DOT_MATCHES_ALL)
-    var fromSelf = false
+    var fromSelf = true
 
-    fun customUpdate(fromSelf: Boolean = false): Boolean {
-        return (fromSelf || Settings.CustomUpdate()) && isOsArchArm64 && isPrebuilt
+    fun customUpdate(fromSelf: Boolean = true): Boolean {
+        return true
     }
 
     override fun shouldHook(url: String, status: Int): Boolean {
@@ -48,19 +50,23 @@ object Upgrade : ApiHook() {
         return if (customUpdate(fromSelf = fromSelf))
             (runCatchingOrNull { checkUpgrade().toString() }
                 ?: """{"code":-1,"message":"检查更新失败，请稍后再试/(ㄒoㄒ)/~~""")
-                .also { fromSelf = false }
-        else if (Settings.BlockUpdate())
-            """{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
+                .also { fromSelf = true }
+        //else if (Settings.BlockUpdate())
+            //"""{"code":-1,"message":"哼，休想要我更新！<(￣︶￣)>"}"""
         else response
     }
 
     private fun checkUpgrade(): JSONObject {
-        var page = 1
-        var result: JSONObject?
-        do {
-            result = pagingCheck(page++)
-        } while (result == null)
-        return result
+        if (updateSource != "BiliRoamingX/BiliRoamingX-Prebuilds") {
+            var page = 1
+            var result: JSONObject?
+            do {
+                result = pagingCheck(page++)
+            } while (result == null)
+            return result
+        } else {
+            return  mapOf("code" to -1, "message" to "官方源已停止支持 ！").toJSONObject()
+        }
     }
 
     private fun pagingCheck(page: Int): JSONObject? {
@@ -70,11 +76,22 @@ object Upgrade : ApiHook() {
         ).metaData.getInt("BUILD_SN").toLong()
         val patchVersion = BuildConfig.VERSION_NAME
         val patchVersionCode = BuildConfig.VERSION_CODE
-        val pageUrl = "$UPGRADE_CHECK_API?page=$page&per_page=100"
+        val pageUrl = "https://api.github.com/repos/sti-233/Bilix-PreBuilds/releases?page=$page&per_page=100"
         val response = JSONArray(URL(pageUrl).readText())
         val mobiApp = Utils.getMobiApp()
+        var useTag = "Unknown"
+        var useTitle = "New BiliRoamingx"
+        if (updateSource == "Bilix-Latest-Foss") {
+            var useTag = "$mobiApp-"
+            var useTitle = "新版 Bilix"
+        } else if (updateSource == "Bilix-Dev") {
+            var useTag = "Nightly-$mobiApp-"
+            var useTitle = "新版 Bilix-Nightly"
+        } else {
+            return null
+        }
         for (data in response) {
-            if (!data.optString("tag_name").startsWith("$mobiApp-"))
+            if (!data.optString("tag_name").startsWith("$useTag"))
                 continue
             val body = data.optString("body").replace("\r\n", "\n")
             val values = changelogRegex.matchEntire(body)?.groupValues ?: break
@@ -84,14 +101,16 @@ object Upgrade : ApiHook() {
                 ?.optJSONObject(0)?.optString("browser_download_url") ?: break
             Logger.debug { "Upgrade, versionSum: $versionSum, changelog: $changelog, url: $url" }
             val info = BUpgradeInfo(versionSum, url, changelog)
-            if (sn < info.sn || (sn == info.sn && patchVersionCode < info.patchVersionCode)) {
+            val patchVersionCode = convertVersion(patchVersion)
+            val infoPatchVersionCode = convertVersion(info.patchVersion)
+            if (sn < info.sn || (sn == info.sn && patchVersionCode < infoPatchVersionCode )) {
                 val sameApp = sn == info.sn
                 val samePatch = patchVersion == info.patchVersion
                 val newChangelog = StringBuilder(info.changelog)
                 val appVersionChange =
-                    if (sameApp) "" else "APP版本：$versionName($versionCode) --> ${info.version}(${info.versionCode})"
+                    if (sameApp) "" else "BiliBili ：$versionName($versionCode) --> ${info.version}(${info.versionCode})"
                 val patchVersionChange =
-                    if (samePatch) "" else "漫游X版本：$patchVersion --> ${info.patchVersion}"
+                    if (samePatch) "" else "BiliRoamingX ：$patchVersion --> ${info.patchVersion}"
                 val changeSum = arrayOf(appVersionChange, patchVersionChange)
                     .filterNot { it.isEmpty() }.joinToString(separator = "\n")
                 if (changeSum.isNotEmpty()) {
@@ -103,7 +122,7 @@ object Upgrade : ApiHook() {
                     "message" to "0",
                     "ttl" to 1,
                     "data" to mapOf(
-                        "title" to "新版漫游X集成包",
+                        "title" to "$useTitle",
                         "content" to newChangelog.toString(),
                         "version" to info.version,
                         "version_code" to if (sameApp) info.versionCode + 1 else info.versionCode,
@@ -121,9 +140,25 @@ object Upgrade : ApiHook() {
                     Logger.debug { "Upgrade check result: $it" }
                 }
             } else {
-                return mapOf("code" to -1, "message" to "未发现新版漫游X集成包！").toJSONObject()
+                return mapOf("code" to -1, "message" to "未发现新版 Bilix ！").toJSONObject()
             }
         }
         return null
+    }
+
+    // 1.22.5.r1864
+    // 102200501864
+    fun convertVersion(version: String): String {
+        val parts = version.split(".")
+        if (parts.size < 3) return "".also {
+            Logger.debug { "The versions don't match. $version" }
+        }
+        val major = parts[0]
+        val minor = parts[1].padStart(3, '0')
+        val patch = parts[2].padStart(3, '0')
+        val release = parts[3].split("r").getOrNull(1)?.padStart(5, '0') ?: "00000"
+        val combinedVersion = "$major$minor$patch$release"
+        Logger.debug { "Get version: $combinedVersion" }
+        return combinedVersion
     }
 }

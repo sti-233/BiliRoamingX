@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="biliroaming_update_source_entries">
+        <item>Bilix-Latest-Foss</item>
+        <item>Bilix-Dev</item>
+        <item>BiliRoamingX/BiliRoamingX-Prebuilds</item>
+    </string-array>
+    <string-array name="biliroaming_update_source_values">
+        <item>@string/biliroaming_release_host</item>
+        <item>@string/biliroaming_nightly_host</item>
+        <item>@string/biliroaming_original_host</item>
+    </string-array>
+    <string-array name="biliroaming_update_source_summaries">
+        <item>以最后开源的 1.23.3.r2045 迭代的 BiliBili (刷版本)</item>
+        <item>基于最后开源的 1.23.3.r2045 微改的 1.24.0 残缺版 无官方更新内容</item>
+        <item>已停止支持</item>
+    </string-array>
     <string-array name="biliroaming_full_screen_quality_entries">
         <item>默认</item>
         <item>8K 超高清</item>

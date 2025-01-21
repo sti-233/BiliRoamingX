@@ -214,6 +214,7 @@
     <string name="biliroaming_block_update_title">禁止APP检查官方更新</string>
     <string name="biliroaming_custom_update_title">允许检查预构建包更新</string>
     <string name="biliroaming_custom_update_summary">允许APP检查作者官方项目提供的预构建漫游X集成包更新</string>
+    <string name="biliroaming_custom_update_summary">允许BiliRoamingX检查更新</string>
     <string name="biliroaming_custom_update_only_64">仅支持Arm 64位系统</string>
     <string name="biliroaming_custom_update_invalid_sig">当前APP非漫游X作者预构建</string>
     <string name="biliroaming_video_detail_other_category_title">其它</string>
@@ -492,4 +493,6 @@
     <string name="biliroaming_old_dm_panel_title">恢复旧版弹幕设置面板</string>
     <string name="biliroaming_old_dm_panel_summary">目前主要区别在于旧版有弹幕优选，可以过滤更多弹幕</string>
     <string name="biliroaming_live_no_block_title">屏蔽实名认证弹窗</string>
+    <string name="biliroaming_custom_update_source_title">自定义更新源</string>
+    <string name="biliroaming_custom_update_source_summary">不同源间可能签名不同,请谨慎选择 !</string>
 </resources>
