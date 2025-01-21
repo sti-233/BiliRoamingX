@@ -56,6 +56,24 @@ class AboutFragment : BiliRoamingBaseSettingFragment() {
             startActivity(intent)
             true
         }
+        findPreference<Preference>("fork_project_url")?.onClick {
+            val uri = Uri.parse(Utils.getString("biliroaming_fork_project_url"))
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+            true
+        }
+        findPreference<Preference>("fork_tg_link")?.onClick {
+            val uri = Uri.parse(Utils.getString("biliroaming_fork_tg_url"))
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+            true
+        }
+        findPreference<Preference>("report")?.onClick {
+            val uri = Uri.parse("https://black.qimo.ink")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+            true
+        }
         findPreference<Preference>("share_log")?.run {
             onClick { Utils.async { shareLog() }; true }
         }

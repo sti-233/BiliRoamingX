@@ -26,5 +26,7 @@
     <string name="biliroaming_hk_bcache_host">cn-hk-eq-bcache-01.bilivideo.com</string>
     <string name="biliroaming_project_url">https://github.com/BiliRoamingX/BiliRoamingX</string>
     <string name="biliroaming_tg_url">https://t.me/bb_show</string>
-    <string name="biliroaming_feedback_url">https://github.com/BiliRoamingX/BiliRoamingX/issues/new/choose</string>
+    <string name="biliroaming_fork_project_url">https://github.com/sti-233/BiliRoamingX</string>
+    <string name="biliroaming_fork_tg_url">https://t.me/Aniruf_x</string>
+    <string name="biliroaming_feedback_url">https://github.com/sti-233/BiliRoamingX/issues/new</string>
 </resources>

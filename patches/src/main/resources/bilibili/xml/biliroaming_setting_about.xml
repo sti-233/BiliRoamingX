@@ -17,9 +17,28 @@
             android:key="tg_link"
             android:summary="@string/biliroaming_tg_url"
             android:title="@string/biliroaming_tg_title" />
+        <androidx.preference.Preference
+            android:key="fork_project_url"
+            android:summary="@string/biliroaming_fork_project_url"
+            android:title="@string/biliroaming_fork_project_title" />
+        <androidx.preference.Preference
+            android:key="fork_tg_link"
+            android:summary="@string/biliroaming_fork_tg_url"
+            android:title="@string/biliroaming_fork_tg_title" />
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory>
+        <androidx.preference.Preference
+            android:key="report"
+            android:summary="@string/biliroaming_report_summary"
+            android:title="@string/biliroaming_report_title" />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory>
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="enable_new_feature"
+            android:summary="@string/biliroaming_enable_new_feature_summary"
+            android:title="@string/biliroaming_enable_new_feature_title" />
         <androidx.preference.SwitchPreferenceCompat
             android:key="debug"
             android:title="@string/biliroaming_debug_title" />

@@ -63,6 +63,10 @@
 
     <androidx.preference.PreferenceCategory>
         <androidx.preference.Preference
+            android:key="exit"
+            android:title="@string/biliroaming_exit_title"
+            android:summary="@string/biliroaming_exit_summary" />
+        <androidx.preference.Preference
             android:key="reboot"
             android:title="@string/biliroaming_reboot_title" />
         <androidx.preference.Preference
