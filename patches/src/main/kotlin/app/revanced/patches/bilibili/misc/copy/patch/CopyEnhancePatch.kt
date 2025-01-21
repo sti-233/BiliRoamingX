@@ -96,6 +96,7 @@ object CopyEnhancePatch : MultiMethodBytecodePatch(
                 )
             }
         }
+/*
         ConversationCopyFingerprint.result?.mutableMethod?.addInstructionsWithLabels(
             0, """
             move-object/from16 v0, p8
@@ -111,6 +112,7 @@ object CopyEnhancePatch : MultiMethodBytecodePatch(
             nop
         """.trimIndent()
         ) ?: throw ConversationCopyFingerprint.exception
+*/
         Comment3DialogCopyFingerprint.result?.run {
             mutableMethod.cloneMutable(registerCount = 3, clearImplementation = true).apply {
                 mutableMethod.name += "_Origin"
