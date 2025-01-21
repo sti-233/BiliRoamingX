@@ -21,5 +21,8 @@ class CustomizeVideoDetailFragment : BiliRoamingBaseSettingFragment() {
         disablePreference(Settings.StoryUIStyle.key, PrefsDisableReason.AppVersion) {
             Versions.ge8_9_0()
         }
+        disablePreference(Settings.AutoLike.key, PrefsDisableReason.AppVersion) {
+            Versions.ge8_9_0()
+        }
     }
 }
