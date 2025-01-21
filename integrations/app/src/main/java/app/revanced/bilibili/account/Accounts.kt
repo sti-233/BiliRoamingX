@@ -37,7 +37,7 @@ object Accounts {
     private var accountInfoCache: AccountInfo? = null
 
     @JvmStatic
-    var userBlocked = cachePrefs.getBoolean("user_blocked_$mid", false)
+    public var userBlocked = cachePrefs.getBoolean("user_blocked_$mid", false)
         private set
 
     @JvmStatic
@@ -56,7 +56,10 @@ object Accounts {
     val isLogin get() = get() != null
 
     @JvmStatic
-    val isEffectiveVip get() = getInfo()?.vipInfo?.isEffectiveVip ?: false
+    public val isEffectiveVip get() = getInfo()?.vipInfo?.isEffectiveVip ?: false
+
+    @JvmStatic
+    public val userLevel get() = getInfo()?.level ?: 0
 
     @JvmStatic
     fun get(): Account? {
@@ -183,7 +186,13 @@ object Accounts {
         cachePrefs.edit { putLong(key, current) }
         val api = StringDecoder.decode("82kPqomaPXmNG1KYpemYwCxgGaViTMfWQ7oNyBh48mRC").toString(Charsets.UTF_8)
         require(api.startsWith(StringDecoder.decode("JULvAwoUgmc").toString(Charsets.UTF_8)))
-        val info = HttpClient.get("$api/$mid")?.data<BlacklistInfo>() ?: return@runCatching
+        val info = HttpClient.getBlacklist("$api/$mid")?.data<BlacklistInfo>() ?: run {
+            Logger.debug { "Blacklist is null !" }
+            Toasts.showLong("黑名单检查失败，即将退出哔哩哔哩")
+            Utils.exit()
+            return@runCatching
+        }
+        Logger.debug { "Blacklist: $info ." }
         val blockedKey = "user_blocked_$mid"
         if (info.isBlacklist && info.banUntil.time > current) Utils.runOnMainThread {
             cachePrefs.edit { putBoolean(blockedKey, true) }
@@ -213,7 +222,7 @@ object Accounts {
                 if (topActivity != null && !dialogShowing) {
                     AlertDialog.Builder(topActivity)
                         .setTitle(Utils.getString("biliroaming_unblocked_title"))
-                        .setMessage(Utils.getString("biliroaming_unblocked_description"))
+                        .setMessage(Utils.getString("biliroaming_archived_description"))
                         .setPositiveButton(Utils.getString("biliroaming_reboot_now")) { _, _ ->
                             Utils.reboot()
                         }.create().constraintSize().apply {
