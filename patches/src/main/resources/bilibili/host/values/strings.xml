@@ -503,4 +503,5 @@
     <string name="biliroaming_unfinished_feature_summary">此项暂时无用</string>
     <string name="biliroaming_exit_title">退出</string>
     <string name="biliroaming_exit_summary">结束BiliBili的所有进程</string>
+    <string name="biliroaming_account_reason">未满足启用此项的条件</string>
 </resources>
