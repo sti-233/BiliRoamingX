@@ -75,6 +75,7 @@ object CacheRedirectPatch : MultiMethodBytecodePatch(
                 }.also { methods.add(it) }
             }
         }
+/*
         OnOgvDownloadFingerprint.result.ifEmpty {
             throw OnOgvDownloadFingerprint.exception
         }.forEach { r ->
@@ -95,6 +96,7 @@ object CacheRedirectPatch : MultiMethodBytecodePatch(
                 )
             }.also { r.mutableClass.methods.add(it) }
         }
+*/
         TheseusOnOgvDownloadFingerprint.result?.run {
             val originMethod = mutableMethod
             originMethod.cloneMutable(registerCount = 3, clearImplementation = true).apply {
