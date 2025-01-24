@@ -82,6 +82,7 @@ object BiliLayoutAdjustResourcesPatch : ResourcePatch() {
                 }
             }
         }
+/*
         runCatching {
             var playlistTitleNewLayout = true
             context.document["res/layout/theseus_playlist_title.xml"].use { dom ->
@@ -95,6 +96,7 @@ object BiliLayoutAdjustResourcesPatch : ResourcePatch() {
                 }
             }
         }
+*/
     }
 
     private fun File.coverPlaylistTitleLayoutOld() = writeText(
