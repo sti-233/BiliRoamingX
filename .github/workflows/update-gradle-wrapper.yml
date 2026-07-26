@@ -5,9 +5,14 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -15,11 +20,11 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
       - name: Update gradle wrapper
         uses: zjns/update-gradle-wrapper-action@main
         with:
-          repo-token: ${{ secrets.gh_token }}
+          repo-token: ${{ github.token }}
           pr-title-template: 'build(deps): bump gradle wrapper from %sourceVersion% to %targetVersion%'
